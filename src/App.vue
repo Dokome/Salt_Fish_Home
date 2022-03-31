@@ -1,7 +1,7 @@
 <template>
-  <cpn-nav-side />
   <div class="app">
-    <router-view></router-view>
+    <cpn-nav-side />
+    <router-view style="flex: 1"></router-view>
   </div>
 </template>
 
@@ -11,11 +11,11 @@ import CpnNavSide from '@/components/CpnNavSide'
 
 <style lang="scss" scoped>
 .app {
+  display: flex;
   position: absolute;
-  left: 15rem;
   top: 0;
   bottom: 0;
-  right: 0;
+  width: 100%;
   overflow: hidden;
   background-color: $background-gray;
 }

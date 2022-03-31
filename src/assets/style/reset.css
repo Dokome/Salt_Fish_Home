@@ -150,8 +150,9 @@ div {
   box-sizing: border-box;
 }
 
-* {
-  cursor: url('~@/assets/img/cursor.png'), auto;
+:root {
+  --cursor-normal: url('@/assets/image/cursor.png'), auto;
+  --cursor-pointer: url('@/assets/image/pointer.png'), auto;
 }
 
 html {
@@ -159,4 +160,10 @@ html {
     '华文细黑', Heiti, '黑体', sans-serif;
   font-weight: 500;
   font-size: 16px;
+  cursor: var(--cursor-normal);
+}
+
+.n-list-item__main {
+  display: flex;
+  align-items: center;
 }
