@@ -16,15 +16,27 @@ import { ref } from 'vue'
 import { cardShadow } from '@/assets/constant'
 import BaseTitle from '@/base/BaseTitle'
 
-const props = defineProps<{ title?: string }>()
+const props = defineProps<{ title?: string; background?: string }>()
 
 const baseStyle: CSSProperties = {
   flex: 1,
   borderRadius: '0.5rem',
   backgroundColor: '#fff',
+  position: 'relative',
+  overflow: 'hidden',
+}
+
+const backgroundStyle: CSSProperties = {
+  backgroundImage: `url(${props.background})`,
+  backgroundSize: 'cover',
+  color: '#fff',
 }
 
 const currentStyle = ref({ ...baseStyle })
+
+if (props.background) {
+  currentStyle.value = { ...currentStyle.value, ...backgroundStyle }
+}
 
 function mouseEnterHandle() {
   currentStyle.value.boxShadow = cardShadow

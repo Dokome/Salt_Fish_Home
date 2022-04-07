@@ -16,6 +16,8 @@ import CpnNavSide from '@/components/CpnNavSide'
   top: 0;
   bottom: 0;
   width: 100%;
+  min-width: 1200px;
+  min-height: 600px;
   overflow: hidden;
   background-color: $background-gray;
 }
