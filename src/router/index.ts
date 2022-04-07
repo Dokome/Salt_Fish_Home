@@ -36,6 +36,7 @@ router.beforeEach((from, to) => {
   // 更改页面标题
   const { meta } = from
   document.title = meta.title as string
+  // ...
 })
 
 export default router
