@@ -1,11 +1,11 @@
 <template>
   <div :class="tabState" style="transition: 0.4s">
-    <div :class="`${tabState}__bgc`">
+    <div :class="`${tabState}-bgc`">
       <div>IM A "SALT FISH" WITH BIG DREAM</div>
     </div>
-    <n-list class="side__list">
+    <n-list class="side-list">
       <template #header>
-        <span :class="`${tabState}__list__header`">菜单</span>
+        <span :class="`${tabState}-list-header`">菜单</span>
       </template>
       <n-list-item
         v-for="item in menulist"
@@ -16,10 +16,10 @@
         <n-icon size="20">
           <component :is="item.comp" />
         </n-icon>
-        <div class="list__item__title">{{ item.title }}</div>
+        <div class="list-item-title">{{ item.title }}</div>
       </n-list-item>
     </n-list>
-    <div :class="`${tabState}__change`" @click="changeSideMode">
+    <div :class="`${tabState}-change`" @click="changeSideMode">
       <n-icon size="30">
         <component :is="tabState === 'side' ? ArrowBackCircleOutline : ArrowForwardCircleOutline" />
       </n-icon>
@@ -47,6 +47,13 @@ function changeCurrent(clickIndex: number, target: string) {
 function changeSideMode() {
   tabState.value = tabState.value === 'side' ? 'side-shrink' : 'side'
 }
+
+router.beforeEach((to) => {
+  const target = menulist.find((menu) => {
+    return to.path.startsWith(menu.target)
+  })
+  currentNavTab.value = target ? target.id : 0
+})
 </script>
 
 <style lang="scss" scoped>
@@ -57,7 +64,7 @@ function changeSideMode() {
   overflow: hidden;
   padding: 0 1rem;
 
-  &__bgc {
+  &-bgc {
     display: flex;
     justify-content: center;
     box-sizing: border-box;
@@ -72,8 +79,8 @@ function changeSideMode() {
     }
   }
 
-  &__list {
-    &__header {
+  &-list {
+    &-header {
       font-weight: 500;
     }
 
@@ -85,7 +92,7 @@ function changeSideMode() {
     }
   }
 
-  .list__item__title {
+  .list-item-title {
     margin-left: 0.5rem;
   }
 }
@@ -97,12 +104,12 @@ function changeSideMode() {
   overflow: hidden;
   padding: 0 1rem;
 
-  &__bgc {
+  &-bgc {
     display: none;
   }
 
-  &__list {
-    &__header {
+  &-list {
+    &-header {
       display: none;
     }
 
@@ -114,7 +121,7 @@ function changeSideMode() {
     }
   }
 
-  .list__item__title {
+  .list-item-title {
     display: none;
   }
 }
@@ -127,8 +134,8 @@ function changeSideMode() {
   padding-left: 1rem;
 }
 
-.side__change,
-.side-shrink__change {
+.side-change,
+.side-shrink-change {
   position: absolute;
   bottom: 0;
   left: 0;
