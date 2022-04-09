@@ -1,5 +1,5 @@
 <template>
-  <cpn-block-card :background="'/src/assets/image/bgc2.jpg'">
+  <cpn-block-card :background="bgc2">
     <div class="home-data">
       <div class="home-data-title">🕐 {{ currentDate }}</div>
       <div>365</div>
@@ -14,6 +14,8 @@
 import CpnBlockCard from '@/components/CpnBlockCard/CpnBlockCard.vue'
 import dayjs from 'dayjs'
 import { ref } from 'vue'
+import bgc2 from '@/assets/image/bgc2.jpg'
+
 const currentDate = ref(dayjs().format('M月D日 hh:mm:ss'))
 
 setInterval(() => {

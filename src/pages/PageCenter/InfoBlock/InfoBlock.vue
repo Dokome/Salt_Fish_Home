@@ -1,5 +1,5 @@
 <template>
-  <cpn-block-card :background="'src/assets/image/bgc2.jpg'" title="关于我 🥝" :without-grow="true">
+  <cpn-block-card :background="bgc2" title="关于我 🥝" :without-grow="true">
     <div class="main-info">
       <n-avatar
         round
@@ -56,6 +56,7 @@ import { NAvatar, NIcon, NButton } from 'naive-ui'
 import { Fish, EyeOutline, Star, People, Male } from '@vicons/ionicons5'
 import { grey, yellow, blue, white } from '@/assets/constant'
 import CpnBlockCard from '@/components/CpnBlockCard'
+import bgc2 from '@/assets/image/bgc2.jpg'
 </script>
 
 <style lang="scss" scoped>

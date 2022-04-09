@@ -13,7 +13,7 @@
 <script lang="ts" setup>
 import type { CSSProperties } from 'vue'
 import { ref } from 'vue'
-import { cardShadow } from '@/assets/constant'
+import { cardShadow, gray } from '@/assets/constant'
 import BaseTitle from '@/base/BaseTitle'
 
 const props = defineProps<{ title?: string; background?: string; withoutGrow?: boolean }>()
@@ -33,6 +33,7 @@ const backgroundStyle: CSSProperties = {
   backgroundImage: `url(${props.background})`,
   backgroundSize: 'cover',
   color: '#fff',
+  backgroundColor: gray,
 }
 
 const currentStyle = ref({ ...baseStyle })
@@ -43,7 +44,7 @@ if (props.background) {
 
 function mouseEnterHandle() {
   currentStyle.value.boxShadow = cardShadow
-  currentStyle.value.transform = 'scale(1.05)'
+  currentStyle.value.transform = 'scale(1.02)'
 }
 
 function mouseLeaveHandle() {

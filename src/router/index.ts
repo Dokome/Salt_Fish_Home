@@ -5,12 +5,20 @@ import type { RouteRecordRaw } from 'vue-router'
 import PageHome from '@/pages/PageHome'
 import PageConcat from '@/pages/PageConcat'
 import PageCenter from '@/pages/PageCenter'
+import PageLogin from '@/pages/PageLogin'
 import PageNotFound from '@/pages/PageNotFound'
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
     redirect: '/home',
+  },
+  {
+    path: '/login',
+    component: PageLogin,
+    meta: {
+      title: '迈出第一步 ⛅',
+    },
   },
   {
     path: '/home',

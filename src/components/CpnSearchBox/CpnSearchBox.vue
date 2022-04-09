@@ -11,7 +11,6 @@
     </div>
     <div class="host">
       <span>{{ `欢迎来到 ${'Dokom'} 的个人空间 🏳‍🌈` }}</span>
-      <span>{{ `你是今天第 ${1234} 位访客 😎` }}</span>
     </div>
     <div class="avatar">
       <n-avatar
