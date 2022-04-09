@@ -58,7 +58,9 @@ router.beforeEach((to) => {
 
 <style lang="scss" scoped>
 .side {
-  position: relative;
+  position: sticky;
+  top: 0;
+  bottom: 0;
   width: 15rem;
   background: #fff;
   overflow: hidden;
@@ -98,7 +100,9 @@ router.beforeEach((to) => {
 }
 
 .side-shrink {
-  position: relative;
+  position: sticky;
+  top: 0;
+  bottom: 0;
   width: 5.5rem;
   background: #fff;
   overflow: hidden;

@@ -1,9 +1,9 @@
 <template>
   <div class="notfound">
-    <n-result status="404" title="404 页面走丢了" description="生活总归带点荒谬">
+    <n-result status="404" title="404 页面去哪儿了？" description="生活总归带点荒谬">
       <template #footer>
         <n-button type="primary" style="font-weight: 700" @click="backToHome"
-          >老老实实回主页</n-button
+          >老老实实回家</n-button
         >
       </template>
     </n-result>

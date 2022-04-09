@@ -16,14 +16,17 @@ import { ref } from 'vue'
 import { cardShadow } from '@/assets/constant'
 import BaseTitle from '@/base/BaseTitle'
 
-const props = defineProps<{ title?: string; background?: string }>()
+const props = defineProps<{ title?: string; background?: string; withoutGrow?: boolean }>()
 
 const baseStyle: CSSProperties = {
-  flex: 1,
   borderRadius: '0.5rem',
   backgroundColor: '#fff',
   position: 'relative',
   overflow: 'hidden',
+}
+
+if (!props.withoutGrow) {
+  baseStyle.flex = 1
 }
 
 const backgroundStyle: CSSProperties = {

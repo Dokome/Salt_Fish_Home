@@ -13,6 +13,7 @@ const slot = useSlots().default
 const props = defineProps<{
   title?: string
   background?: string
+  withoutGrow?: boolean
 }>()
 </script>
 

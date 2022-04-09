@@ -4,6 +4,7 @@ import type { RouteRecordRaw } from 'vue-router'
 // 引入组件
 import PageHome from '@/pages/PageHome'
 import PageConcat from '@/pages/PageConcat'
+import PageCenter from '@/pages/PageCenter'
 import PageNotFound from '@/pages/PageNotFound'
 
 const routes: RouteRecordRaw[] = [
@@ -23,6 +24,20 @@ const routes: RouteRecordRaw[] = [
     component: PageConcat,
     meta: {
       title: '联系我们 💭',
+    },
+  },
+  {
+    path: '/center',
+    component: PageCenter,
+    meta: {
+      title: '欢迎回来 🤗',
+    },
+  },
+  {
+    path: '/about',
+    component: PageCenter,
+    meta: {
+      title: '关于我们 💡',
     },
   },
   {
