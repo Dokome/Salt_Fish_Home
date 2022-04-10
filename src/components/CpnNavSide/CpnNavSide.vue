@@ -52,7 +52,8 @@ router.beforeEach((to) => {
   const target = menulist.find((menu) => {
     return to.path.startsWith(menu.target)
   })
-  currentNavTab.value = target ? target.id : 0
+
+  currentNavTab.value = target ? target.id : currentNavTab.value
 })
 </script>
 

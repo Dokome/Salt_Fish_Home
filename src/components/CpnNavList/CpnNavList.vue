@@ -1,22 +1,10 @@
 <template>
-  <cpn-block-card title="热门动态 💥">
-    <ul class="home-hot">
-      <li v-for="(item, index) in hotlist" :key="item.id">
-        {{ iconlist[index] }} {{ item.title }}
-      </li>
-    </ul>
-    <div class="home-hot-logo">
-      <n-icon :component="Bonfire" :color="yellow" size="80" depth="3" />
-    </div>
-  </cpn-block-card>
+  <ul class="command">
+    <li v-for="item in hotlist" :key="item.id">{{ item.title }}</li>
+  </ul>
 </template>
 
 <script lang="ts" setup>
-import CpnBlockCard from '@/components/CpnBlockCard/CpnBlockCard.vue'
-import { Bonfire } from '@vicons/ionicons5'
-import { NIcon } from 'naive-ui'
-import { yellow } from '@/assets/constant'
-const iconlist = ['🌳', '🌺', '🌷', '🍀', '🌱']
 const hotlist = [
   {
     id: 1,
@@ -42,10 +30,10 @@ const hotlist = [
 </script>
 
 <style lang="scss" scoped>
-.home-hot {
+.command {
   display: flex;
   flex-direction: column;
-  padding: 0 0.5rem;
+  padding: var(--padding-withTitle);
   li {
     width: 100%;
     padding: 0.5rem 0.5rem;
@@ -61,10 +49,5 @@ const hotlist = [
       color: $text-white;
     }
   }
-}
-.home-hot-logo {
-  position: absolute;
-  right: 2rem;
-  bottom: 2rem;
 }
 </style>

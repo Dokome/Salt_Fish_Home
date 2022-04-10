@@ -151,8 +151,11 @@ div {
 }
 
 :root {
+  /* 鼠标 */
   --cursor-normal: url('@/assets/image/cursor.png'), auto;
   --cursor-pointer: url('@/assets/image/pointer.png'), auto;
+  /* 特殊样式 */
+  --padding-withTitle: 0 1rem 1rem;
 }
 
 html {

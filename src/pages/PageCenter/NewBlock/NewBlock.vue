@@ -17,6 +17,6 @@ import { NButton } from 'naive-ui'
   width: 20rem;
   display: flex;
   gap: 1rem;
-  padding: 1rem;
+  padding: var(--padding-withTitle);
 }
 </style>

@@ -1,0 +1,7 @@
+declare module '@kangc/v-md-editor/lib/theme/github.js'
+declare module '@kangc/v-md-editor'
+declare module 'highlight.js/lib/core'
+declare module 'highlight.js/lib/languages/json'
+declare module 'highlight.js/lib/languages/css'
+declare module 'highlight.js/lib/languages/javascript'
+declare module '@/utils/encrypt'

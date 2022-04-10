@@ -1,13 +1,16 @@
 <template>
   <div class="search">
     <div class="box">
-      <n-input placeholder="搜索文章标题" clearable round>
-        <template #prefix>
-          <n-icon>
-            <search />
-          </n-icon>
-        </template>
-      </n-input>
+      <n-input-group>
+        <n-input placeholder="搜索文章标题" clearable round>
+          <template #prefix>
+            <n-icon>
+              <search />
+            </n-icon>
+          </template>
+        </n-input>
+        <n-button type="primary" round>搜索</n-button>
+      </n-input-group>
     </div>
     <div class="host">
       <span>{{ `欢迎来到 ${'Dokom'} 的个人空间 🏳‍🌈` }}</span>
@@ -26,7 +29,7 @@
 </template>
 
 <script lang="ts" setup>
-import { NInput, NIcon, NAvatar, NBadge } from 'naive-ui'
+import { NInput, NIcon, NAvatar, NBadge, NInputGroup, NButton } from 'naive-ui'
 import { Search } from '@vicons/ionicons5'
 </script>
 

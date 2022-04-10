@@ -5,7 +5,10 @@ import type { RouteRecordRaw } from 'vue-router'
 import PageHome from '@/pages/PageHome'
 import PageConcat from '@/pages/PageConcat'
 import PageCenter from '@/pages/PageCenter'
+import PageAbout from '@/pages/PageAbout'
 import PageLogin from '@/pages/PageLogin'
+import PagePublish from '@/pages/PagePublish'
+import PageDetail from '@/pages/PageDetail'
 import PageNotFound from '@/pages/PageNotFound'
 
 const routes: RouteRecordRaw[] = [
@@ -34,6 +37,7 @@ const routes: RouteRecordRaw[] = [
       title: '联系我们 💭',
     },
   },
+
   {
     path: '/center',
     component: PageCenter,
@@ -43,9 +47,23 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/about',
-    component: PageCenter,
+    component: PageAbout,
     meta: {
-      title: '关于我们 💡',
+      title: '关于本站 💡',
+    },
+  },
+  {
+    path: '/publish',
+    component: PagePublish,
+    meta: {
+      title: '写点什么 📝',
+    },
+  },
+  {
+    path: '/detail',
+    component: PageDetail,
+    meta: {
+      title: '文章详情 📃',
     },
   },
   {
