@@ -4,19 +4,21 @@
       <cpn-block-card title="请先完成登录 😛">
         <div class="main-inner">
           <n-input-group>
-            <n-input placeholder="输入您的邮箱">
+            <n-input placeholder="输入您的邮箱" :on-update:value="emailValueChangeHandle">
               <template #prefix>
                 <n-icon :component="MailOutline" />
               </template>
             </n-input>
           </n-input-group>
           <n-input-group v-if="!loginMethod">
-            <n-input placeholder="验证码">
+            <n-input placeholder="验证码" :on-update:value="emailCodeValueChangeHandle">
               <template #prefix>
                 <n-icon :component="KeypadOutline" />
               </template>
             </n-input>
-            <n-button type="primary" strong>获取验证码</n-button>
+            <n-button type="primary" strong :disabled="cutDown > -1" @click="sendCodeMessage">{{
+              codeMessage
+            }}</n-button>
           </n-input-group>
           <n-input-group v-else>
             <n-input placeholder="密码" type="password">
@@ -25,9 +27,16 @@
               </template>
             </n-input>
           </n-input-group>
-          <div class="register">没有账号？立即注册</div>
+          <div class="register" @click="changeToRegister">没有账号？立即注册</div>
           <div class="change" @click="changeLoginMethod">切换密码登录</div>
-          <n-button type="primary" strong>登录</n-button>
+          <n-button
+            type="primary"
+            strong
+            :loading="loginLoading"
+            :disabled="loginLoading"
+            @click="sendRegisterhandle"
+            >登录</n-button
+          >
         </div>
       </cpn-block-card>
     </div>
@@ -38,11 +47,21 @@
 import CpnBlockCard from '@/components/CpnBlockCard'
 import { NInput, NInputGroup, NIcon, NButton } from 'naive-ui'
 import { MailOutline, KeypadOutline, KeyOutline } from '@vicons/ionicons5'
+import { useCutDown } from '../PageRegister/hooks'
+import { useLoginInfo } from './hooks'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 // 0 为验证码 1 为邮箱 登录
 const loginMethod = ref(false)
 const router = useRouter()
+const { codeMessage, cutDown } = useCutDown()
+const {
+  loginLoading,
+  sendCodeMessage,
+  emailValueChangeHandle,
+  emailCodeValueChangeHandle,
+  sendRegisterhandle,
+} = useLoginInfo(cutDown)
 
 function changeLoginMethod() {
   loginMethod.value = !loginMethod.value
@@ -50,6 +69,10 @@ function changeLoginMethod() {
 
 function closeLoginModal() {
   router.push('/home')
+}
+
+function changeToRegister() {
+  router.push('/register')
 }
 </script>
 

@@ -9,6 +9,7 @@ import PageAbout from '@/pages/PageAbout'
 import PageLogin from '@/pages/PageLogin'
 import PagePublish from '@/pages/PagePublish'
 import PageDetail from '@/pages/PageDetail'
+import PageRegister from '@/pages/PageRegister'
 import PageNotFound from '@/pages/PageNotFound'
 
 const routes: RouteRecordRaw[] = [
@@ -21,6 +22,13 @@ const routes: RouteRecordRaw[] = [
     component: PageLogin,
     meta: {
       title: '迈出第一步 ⛅',
+    },
+  },
+  {
+    path: '/register',
+    component: PageRegister,
+    meta: {
+      title: '加入我们吧 😜',
     },
   },
   {

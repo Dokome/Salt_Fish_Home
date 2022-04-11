@@ -38,9 +38,7 @@ class Request {
         return res.data
       },
       (err) => {
-        if (err.response.status === 404) {
-          // console.log('404')
-        }
+        alert('服务器连接失败')
         return err
       }
     )
@@ -83,4 +81,7 @@ class Request {
   }
 }
 
-export default Request
+export default new Request({
+  baseURL: 'http://112.74.108.218:8080/',
+  timeout: 15000,
+})

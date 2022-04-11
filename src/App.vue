@@ -1,15 +1,18 @@
 <template>
   <div class="app">
-    <cpn-nav-side />
-    <router-view v-slot="{ Component }" style="flex: 1">
-      <keep-alive>
-        <component :is="Component" />
-      </keep-alive>
-    </router-view>
+    <n-message-provider>
+      <cpn-nav-side />
+      <router-view v-slot="{ Component }" style="flex: 1">
+        <keep-alive>
+          <component :is="Component" />
+        </keep-alive>
+      </router-view>
+    </n-message-provider>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { NMessageProvider } from 'naive-ui'
 import CpnNavSide from '@/components/CpnNavSide'
 </script>
 

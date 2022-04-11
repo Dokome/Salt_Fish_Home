@@ -10,3 +10,8 @@ export interface RequestInterceptors<T = AxiosResponse> {
 export interface RequestConfig<T = AxiosResponse> extends AxiosRequestConfig {
   interceptors?: RequestInterceptors<T>
 }
+
+export interface BaseResponse {
+  message: string
+  success: boolean
+}

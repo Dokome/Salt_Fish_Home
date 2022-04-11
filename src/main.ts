@@ -4,6 +4,7 @@ import router from './router'
 import MdEditor from './plugins/MdEditor'
 // 全局样式
 import './assets/style/reset.css'
+
 const app = createApp(App)
 // 注册路由
 app.use(router)

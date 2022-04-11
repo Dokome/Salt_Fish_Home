@@ -30,7 +30,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { NIcon, NList, NListItem } from 'naive-ui'
+import { NIcon, NList, NListItem, useMessage } from 'naive-ui'
 import { ArrowForwardCircleOutline, ArrowBackCircleOutline } from '@vicons/ionicons5'
 import useNavList from './hooks/useNavList'
 // 获取菜单列表
@@ -38,6 +38,8 @@ const menulist = useNavList()
 const currentNavTab = ref(0)
 const router = useRouter()
 const tabState = ref('side')
+const message = useMessage()
+;(window as any).$message = message
 
 function changeCurrent(clickIndex: number, target: string) {
   currentNavTab.value = clickIndex
