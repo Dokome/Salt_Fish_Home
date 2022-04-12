@@ -6,6 +6,7 @@
           <cpn-block-card title="内容详情 📖">
             <v-md-editor ref="preview" :model-value="markdown" mode="preview"></v-md-editor>
           </cpn-block-card>
+          <cpn-commnet-list></cpn-commnet-list>
         </div>
       </template>
       <template #rightBox>
@@ -35,6 +36,7 @@
 import { useGetDetail, useHeadJump } from './hooks'
 import CpnLayoutTem from '@/components/CpnLayoutTem'
 import CpnBlockCard from '@/components/CpnBlockCard'
+import CpnCommnetList from '@/components/CpnCommnetList'
 import RecommandBlock from './RecommandBlock'
 import InteractBlock from './InteractBlock'
 import InfoBlock from './InfoBlock'
@@ -47,6 +49,8 @@ const { preview, detailWrapper, titles, handleAnchorClick } = useHeadJump()
   .detail-main {
     min-height: 100%;
     display: flex;
+    flex-direction: column;
+    gap: 2rem;
   }
 
   .detail-catalogue {

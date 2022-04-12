@@ -18,4 +18,4 @@ VMdEditor.use(githubTheme, {
   Hljs: hljs,
 })
 
-export default VMdEditor
+export { VMdEditor }

@@ -10,6 +10,7 @@ import PageLogin from '@/pages/PageLogin'
 import PagePublish from '@/pages/PagePublish'
 import PageDetail from '@/pages/PageDetail'
 import PageRegister from '@/pages/PageRegister'
+import PageMoment from '@/pages/PageMoment'
 import PageNotFound from '@/pages/PageNotFound'
 
 const routes: RouteRecordRaw[] = [
@@ -36,6 +37,13 @@ const routes: RouteRecordRaw[] = [
     component: PageHome,
     meta: {
       title: '欢迎来到咸鱼社区 😁',
+    },
+  },
+  {
+    path: '/moment',
+    component: PageMoment,
+    meta: {
+      title: '看看大家在干啥 🥰',
     },
   },
   {

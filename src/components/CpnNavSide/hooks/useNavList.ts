@@ -23,7 +23,7 @@ const menulist = [
     id: 2,
     title: '文章广场',
     comp: ApertureOutline,
-    target: '/square',
+    target: '/moment',
   },
   {
     id: 3,

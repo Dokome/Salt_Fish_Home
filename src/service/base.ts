@@ -1,4 +1,5 @@
 import axios from 'axios'
+import storage from '@/utils/storage'
 import type { AxiosInstance } from 'axios'
 import type { RequestConfig, RequestInterceptors } from './type'
 
@@ -38,7 +39,23 @@ class Request {
         return res.data
       },
       (err) => {
-        alert('服务器连接失败')
+        const { status } = err.response
+        const { token } = err.response.config.headers
+
+        if (status === 401) {
+          const message = token && token.length ? '登陆状态已过期，请重新登录' : '请先完成登录'
+          storage.clear()
+          ;(window as any).$message.warning(message)
+          setTimeout(() => {
+            location.href = '/login'
+          }, 3000)
+
+          return {
+            success: false,
+            message,
+            code: status,
+          }
+        }
         return err
       }
     )

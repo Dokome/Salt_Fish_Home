@@ -13,7 +13,7 @@
       <n-button type="info">保存草稿</n-button>
       <n-button type="primary">发布文章</n-button>
     </div>
-    <v-md-editor v-model="text" height="80vh"></v-md-editor>
+    <v-md-editor v-model="text" height="80vh" :disabled-menus="[]"></v-md-editor>
   </div>
 </template>
 
