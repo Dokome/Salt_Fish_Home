@@ -12,8 +12,8 @@
 </template>
 
 <script lang="ts" setup>
-import { NMessageProvider } from 'naive-ui'
 import CpnNavSide from '@/components/CpnNavSide'
+import { NMessageProvider } from 'naive-ui'
 </script>
 
 <style lang="scss" scoped>

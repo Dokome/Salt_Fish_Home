@@ -1,7 +1,14 @@
 /* eslint-disable no-async-promise-executor */
 import request from './base'
+import storage from '@/utils/storage'
+
 // import { MessageProviderInst } from 'naive-ui'
-import type { RregisterResponse, EmailRegisterResponseMsg } from './userType'
+import type {
+  RregisterResponse,
+  EmailRegisterResponseMsg,
+  LoginResponse,
+  LoginResponseMsg,
+} from './userType'
 // 获取 message 组件
 // const messager: MessageProviderInst =
 
@@ -26,10 +33,20 @@ export async function getEmailCode(email: string): Promise<EmailRegisterResponse
  * @returns Promise 包裹的验证码相关信息
  */
 export async function getLoginEmailCode(email: string): Promise<EmailRegisterResponseMsg> {
+  if (storage.get('__CURRENT_CODE_CD__')) {
+    ;(window as any).$message.warning('发送验证码过于频繁 ~')
+    throw new Error()
+  }
+
   return new Promise<EmailRegisterResponseMsg>(async (resolve) => {
     const { success, content, message } = await request.get<RregisterResponse>({
       url: `/login/getVerification/${email}`,
     })
+
+    // 设置 60s 过期时间
+    if (success) {
+      storage.set('__CURRENT_CODE_CD__', '60_sec', 60 * 1000)
+    }
 
     ;(window as any).$message[success ? 'success' : 'error'](message)
     resolve(content)
@@ -62,14 +79,20 @@ export async function postRegister(
     resolve(success)
   })
 }
-
+/**
+ * @name 发送登录请求
+ * @param email
+ * @param emailToken
+ * @param emailVerification
+ * @returns
+ */
 export async function postloginWithCode(
   email: string,
   emailToken: string,
   emailVerification: string
 ): Promise<boolean> {
   return new Promise<boolean>(async (resolve) => {
-    const { success, message } = await request.post<RregisterResponse>({
+    const { success, message, content } = await request.post<LoginResponse>({
       url: `/login/byEmail`,
       data: {
         email,
@@ -77,6 +100,12 @@ export async function postloginWithCode(
         emailVerification,
       },
     })
+
+    // console.log(content.token)
+    if (success) {
+      // 登录成功存 token 7 天
+      storage.set('__USER_LOGIN_TOKEN__', content.token, 3600 * 1000 * 24 * 7)
+    }
 
     ;(window as any).$message[success ? 'success' : 'error'](message)
     resolve(success)

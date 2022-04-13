@@ -4,8 +4,10 @@ import { useRouter } from 'vue-router'
 import { useMessage } from 'naive-ui'
 import { emailValidhandle, emailCodeValidhandle } from '@/utils/valid'
 import { getLoginEmailCode, postloginWithCode } from '@/service/user'
+import { useUserStore } from '@/store'
 
 export function useLoginInfo(cutDown: Ref<number>) {
+  const userStore = useUserStore()
   const loginLoading = ref(false)
   const router = useRouter()
   const message = useMessage()
@@ -48,13 +50,14 @@ export function useLoginInfo(cutDown: Ref<number>) {
     code.value = inputval
   }
 
-  // 发送注册请求
-  async function sendRegisterhandle() {
+  // 发送登录请求
+  async function sendLoginhandle() {
     if (validEmail() && validEmailCode()) {
       loginLoading.value = true
       const success = await postloginWithCode(email.value, emailTokenR.value, code.value)
       loginLoading.value = false
       if (success) {
+        userStore.changeLoginState(true)
         message.success('欢迎回来 😀~')
         return router.push('./home')
       }
@@ -66,6 +69,6 @@ export function useLoginInfo(cutDown: Ref<number>) {
     sendCodeMessage,
     emailValueChangeHandle,
     emailCodeValueChangeHandle,
-    sendRegisterhandle,
+    sendLoginhandle,
   }
 }

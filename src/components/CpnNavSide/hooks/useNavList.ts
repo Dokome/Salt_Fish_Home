@@ -4,6 +4,7 @@ import {
   ApertureOutline,
   ChatboxOutline,
   InformationCircleOutline,
+  LogInOutline,
 } from '@vicons/ionicons5'
 
 const menulist = [
@@ -33,12 +34,18 @@ const menulist = [
   },
   {
     id: 4,
+    title: '登录 & 注册',
+    comp: LogInOutline,
+    target: '/login',
+  },
+  {
+    id: 5,
     title: '关于',
     comp: InformationCircleOutline,
     target: '/about',
   },
 ]
 
-export default function useNavList() {
+export function useNavList() {
   return menulist
 }

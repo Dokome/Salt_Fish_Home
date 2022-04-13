@@ -43,7 +43,7 @@ class Request {
         const { token } = err.response.config.headers
 
         if (status === 401) {
-          const message = token && token.length ? '登陆状态已过期，请重新登录' : '请先完成登录'
+          const message = token && token.length ? '登陆状态已过期，请重新登录' : '请先完成登录 ~'
           storage.clear()
           ;(window as any).$message.warning(message)
           setTimeout(() => {
@@ -62,6 +62,12 @@ class Request {
   }
 
   request<T>(config: RequestConfig<T>): Promise<T> {
+    if (!config.headers) {
+      config.headers = {}
+    }
+    // 获取 token
+    ;(config.headers as any).token = storage.get('__USER_LOGIN_TOKEN__') || ''
+
     return new Promise((resolve, reject) => {
       if (config.interceptors?.requestInterceptor) {
         config = config.interceptors.requestInterceptor(config)

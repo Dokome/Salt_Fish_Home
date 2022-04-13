@@ -1,6 +1,6 @@
 <template>
   <cpn-block-card v-for="item in 8" :key="item">
-    <div class="main-list-item">
+    <div class="main-list-item" @click="enterDetail">
       <n-avatar
         style="width: 10rem; height: 10rem"
         object-fit="cover"
@@ -35,6 +35,12 @@
 <script lang="ts" setup>
 import CpnBlockCard from '@/components/CpnBlockCard'
 import { NAvatar, NEllipsis, NTag } from 'naive-ui'
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
+function enterDetail() {
+  router.push('/detail')
+}
 </script>
 
 <style lang="scss" scoped>

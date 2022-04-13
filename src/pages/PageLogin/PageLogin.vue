@@ -28,13 +28,13 @@
             </n-input>
           </n-input-group>
           <div class="register" @click="changeToRegister">没有账号？立即注册</div>
-          <div class="change" @click="changeLoginMethod">切换密码登录</div>
+          <!-- <div class="change" @click="changeLoginMethod">切换密码登录</div> -->
           <n-button
             type="primary"
             strong
             :loading="loginLoading"
             :disabled="loginLoading"
-            @click="sendRegisterhandle"
+            @click="sendLoginhandle"
             >登录</n-button
           >
         </div>
@@ -60,12 +60,12 @@ const {
   sendCodeMessage,
   emailValueChangeHandle,
   emailCodeValueChangeHandle,
-  sendRegisterhandle,
+  sendLoginhandle,
 } = useLoginInfo(cutDown)
 
-function changeLoginMethod() {
-  loginMethod.value = !loginMethod.value
-}
+// function changeLoginMethod() {
+//   loginMethod.value = !loginMethod.value
+// }
 
 function closeLoginModal() {
   router.push('/home')

@@ -59,6 +59,7 @@ const routes: RouteRecordRaw[] = [
     component: PageCenter,
     meta: {
       title: '欢迎回来 🤗',
+      needLogin: true,
     },
   },
   {
@@ -73,6 +74,7 @@ const routes: RouteRecordRaw[] = [
     component: PagePublish,
     meta: {
       title: '写点什么 📝',
+      needLogin: true,
     },
   },
   {
