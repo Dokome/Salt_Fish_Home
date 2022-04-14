@@ -105,6 +105,34 @@ export async function postloginWithCode(
     if (success) {
       // 登录成功存 token 7 天
       storage.set('__USER_LOGIN_TOKEN__', content.token, 3600 * 1000 * 24 * 7)
+      storage.set('__USER_LOGIN_ID__', content.id, 3600 * 1000 * 24 * 7)
+    }
+
+    ;(window as any).$message[success ? 'success' : 'error'](message)
+    resolve(success)
+  })
+}
+
+/**
+ * @name 邮箱密码登录
+ * @param email
+ * @param password
+ * @returns
+ */
+export async function postloginWithPassword(email: string, password: string): Promise<boolean> {
+  return new Promise<boolean>(async (resolve) => {
+    const { success, message, content } = await request.post<LoginResponse>({
+      url: `/login/byPassword`,
+      data: {
+        email,
+        password,
+      },
+    })
+
+    if (success) {
+      // 登录成功存 token 7 天
+      storage.set('__USER_LOGIN_TOKEN__', content.token, 3600 * 1000 * 24 * 7)
+      storage.set('__USER_LOGIN_ID__', content.id, 3600 * 1000 * 24 * 7)
     }
 
     ;(window as any).$message[success ? 'success' : 'error'](message)

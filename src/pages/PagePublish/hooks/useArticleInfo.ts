@@ -16,12 +16,13 @@ export function useArticleInfo() {
   // 标签
   const tag = ref(0)
   const showModal = ref(false)
+  const isUploading = ref(false)
   // 上传文章封面
   async function coverImgRequestHandle({ file }: UploadCustomRequestOptions) {
     const formData = new FormData()
     formData.append('file', file.file as File)
     const url = await uploadImage(formData)
-    cover.value = `/file${url}`
+    cover.value = `file${url}`
   }
 
   // 上传文章图片
@@ -40,7 +41,7 @@ export function useArticleInfo() {
       storage.set('__ARTICLE_SAVE_LOCAL__', text.value, 30 * 24 * 3600 * 1000)
       ;(window as any).$message.success('保存成功 ~')
     } catch (error) {
-      ;(window as any).$message.success('保存失败 😥')
+      ;(window as any).$message.error('保存失败 😥')
     }
   }
 
@@ -54,8 +55,21 @@ export function useArticleInfo() {
     tag.value = inputval
   }
 
+  // 发布文章
   async function articlePublishHandle() {
-    const success = await postArticlePublish(cover.value, text.value, tag.value, title.value)
+    isUploading.value = true
+    if (!title.value || !cover.value) {
+      isUploading.value = false
+      return (window as any).$message.error('上传失败 😥')
+    }
+
+    const success = await postArticlePublish({
+      articleImg: cover.value,
+      content: text.value,
+      tag: tag.value,
+      title: title.value,
+    })
+    isUploading.value = false
     if (success) {
       // 情况当前内容
       title.value = ''
@@ -73,19 +87,20 @@ export function useArticleInfo() {
   }
 
   return {
-    // 参数
+    //
     text,
     title,
     cover,
     tag,
     showModal,
-    // 方法
+    isUploading,
+    //
     coverImgRequestHandle,
     articleUploadImage,
+    articlePublishHandle,
     saveArticleToStorage,
     titleValueChangeHandle,
     tagValueChangeHandle,
-    articlePublishHandle,
     changeModalState,
   }
 }

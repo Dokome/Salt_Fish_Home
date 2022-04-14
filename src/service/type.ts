@@ -14,4 +14,5 @@ export interface RequestConfig<T = AxiosResponse> extends AxiosRequestConfig {
 export interface BaseResponse {
   message: string
   success: boolean
+  code: number
 }

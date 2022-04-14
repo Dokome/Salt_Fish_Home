@@ -2,14 +2,14 @@
   <div class="search">
     <div class="box">
       <n-input-group>
-        <n-input placeholder="搜索文章标题" clearable round>
+        <n-input v-model:value="searchVal" placeholder="搜索文章标题" clearable round>
           <template #prefix>
             <n-icon>
               <search />
             </n-icon>
           </template>
         </n-input>
-        <n-button type="primary" round>搜索</n-button>
+        <n-button type="primary" round @click="searchForArticle">搜索</n-button>
       </n-input-group>
     </div>
     <div class="host">
@@ -31,6 +31,13 @@
 <script lang="ts" setup>
 import { NInput, NIcon, NAvatar, NBadge, NInputGroup, NButton } from 'naive-ui'
 import { Search } from '@vicons/ionicons5'
+import { ref } from 'vue'
+const searchVal = ref('')
+const emits = defineEmits(['searchForArticle'])
+
+function searchForArticle() {
+  emits('searchForArticle', searchVal.value)
+}
 </script>
 
 <style lang="scss" scoped>

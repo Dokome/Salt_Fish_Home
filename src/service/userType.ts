@@ -8,6 +8,7 @@ export interface EmailRegisterResponseMsg {
 export interface LoginResponseMsg {
   loginSuccess: boolean
   token: string
+  id: number
 }
 
 export interface RregisterResponse extends BaseResponse {

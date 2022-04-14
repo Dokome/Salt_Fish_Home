@@ -1,7 +1,11 @@
 <template>
   <cpn-block-card>
     <div class="load-more">
-      <n-pagination v-model:page="page" :page-count="10" />
+      <n-pagination
+        :page="props.currentPage"
+        :page-count="props.totalPage"
+        :on-update:page="changeCurrentPage"
+      />
     </div>
   </cpn-block-card>
 </template>
@@ -9,8 +13,15 @@
 <script lang="ts" setup>
 import CpnBlockCard from '@/components/CpnBlockCard'
 import { NPagination } from 'naive-ui'
-import { ref } from 'vue'
-const page = ref(3)
+const props = defineProps<{
+  currentPage: number
+  totalPage: number
+}>()
+//
+const emits = defineEmits(['changeCurrentPage'])
+function changeCurrentPage(page: any) {
+  emits('changeCurrentPage', page)
+}
 </script>
 
 <style lang="scss" scoped>

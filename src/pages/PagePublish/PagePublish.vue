@@ -48,9 +48,15 @@
                 :on-update:value="tagValueChangeHandle"
               ></n-select>
             </n-input-group>
-            <n-tag type="primary">上传封面 （推荐使用 1:1 的图片 🤗）</n-tag>
+            <n-tag type="primary">上传封面 （推荐使用 1:1 的图片 🤗 且大小不超过 400 kb）</n-tag>
             <n-upload list-type="image-card" :max="1" :custom-request="coverImgRequestHandle" />
-            <n-button type="primary" @click="articlePublishHandle">确认发布</n-button>
+            <n-button
+              :disabled="isUploading"
+              :loading="isUploading"
+              type="primary"
+              @click="articlePublishHandle"
+              >确认发布</n-button
+            >
           </div>
         </cpn-block-card>
       </div>
@@ -86,6 +92,7 @@ const {
   title,
   tag,
   showModal,
+  isUploading,
   coverImgRequestHandle,
   articleUploadImage,
   saveArticleToStorage,

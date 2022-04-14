@@ -1,6 +1,6 @@
 <template>
   <div class="moment">
-    <cpn-search-box />
+    <cpn-search-box @search-for-article="searchForArticle" />
     <cpn-layout-tem>
       <!-- 左边主要为列表 右边为杂项 -->
       <template #leftBox>
@@ -8,9 +8,13 @@
           <!-- 文章排序 -->
           <cpn-sort-block />
           <!-- 文章列表 -->
-          <cpn-main-list />
+          <cpn-main-list :list="currentList" :loading="isloading" />
           <!-- 加载更多 -->
-          <cpn-load-more />
+          <cpn-load-more
+            :current-page="curPage"
+            :total-page="totalPage"
+            @change-current-page="changeCurrentPage"
+          />
         </div>
       </template>
       <template #rightBox>
@@ -31,6 +35,16 @@ import CpnLoadMore from '@/components/CpnLoadMore'
 import HotBlock from './HotBlock'
 import AuthorBlock from './AuthorBlock'
 import TagsBlock from './TagsBlock'
+import { useArticleList } from './hooks'
+const {
+  curPage,
+  totalPage,
+  currentList,
+  isloading,
+  //
+  changeCurrentPage,
+  searchForArticle,
+} = useArticleList()
 </script>
 
 <style lang="scss" scoped>

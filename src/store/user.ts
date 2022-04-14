@@ -5,6 +5,7 @@ export const useUserStore = defineStore({
   id: 'user',
   state: () => ({
     loginState: storage.get('__USER_LOGIN_TOKEN__') ? true : false,
+    userId: storage.get('__USER_LOGIN_ID__') || '',
   }),
   actions: {
     /**
@@ -13,6 +14,9 @@ export const useUserStore = defineStore({
      */
     changeLoginState(state: boolean) {
       this.loginState = state
+      if (state) {
+        this.userId = storage.get('__USER_LOGIN_ID__')
+      }
     },
   },
 })

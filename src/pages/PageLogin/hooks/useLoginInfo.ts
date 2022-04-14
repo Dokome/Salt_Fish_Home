@@ -3,16 +3,19 @@ import type { Ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useMessage } from 'naive-ui'
 import { emailValidhandle, emailCodeValidhandle } from '@/utils/valid'
-import { getLoginEmailCode, postloginWithCode } from '@/service/user'
+import { getLoginEmailCode, postloginWithCode, postloginWithPassword } from '@/service/user'
 import { useUserStore } from '@/store'
+import hexMd5 from '@/utils/encrypt'
 
 export function useLoginInfo(cutDown: Ref<number>) {
   const userStore = useUserStore()
+  const loginMethod = ref(false)
   const loginLoading = ref(false)
   const router = useRouter()
   const message = useMessage()
   const email = ref('')
   const code = ref('')
+  const password = ref('')
   // 返回的邮箱验证 token
   const emailTokenR = ref('')
   // 验证邮箱格式
@@ -50,11 +53,24 @@ export function useLoginInfo(cutDown: Ref<number>) {
     code.value = inputval
   }
 
+  function passwordValueChangeHandle(inputval: string) {
+    password.value = inputval
+  }
+
+  function changeLoginMethod() {
+    loginMethod.value = !loginMethod.value
+  }
+
   // 发送登录请求
   async function sendLoginhandle() {
-    if (validEmail() && validEmailCode()) {
+    if (validEmail() && (loginMethod.value || validEmailCode())) {
       loginLoading.value = true
-      const success = await postloginWithCode(email.value, emailTokenR.value, code.value)
+      let success = true
+      if (loginMethod.value) {
+        success = await postloginWithPassword(email.value, hexMd5(password.value))
+      } else {
+        success = await postloginWithCode(email.value, emailTokenR.value, code.value)
+      }
       loginLoading.value = false
       if (success) {
         userStore.changeLoginState(true)
@@ -65,10 +81,13 @@ export function useLoginInfo(cutDown: Ref<number>) {
   }
 
   return {
+    loginMethod,
     loginLoading,
     sendCodeMessage,
     emailValueChangeHandle,
     emailCodeValueChangeHandle,
+    passwordValueChangeHandle,
     sendLoginhandle,
+    changeLoginMethod,
   }
 }
