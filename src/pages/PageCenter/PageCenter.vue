@@ -6,11 +6,12 @@
       <template #leftBox>
         <div class="main-list">
           <!-- 文章排序 -->
-          <cpn-sort-block />
+          <cpn-sort-block v-if="currentList.length" @change-sort-kind="changeSortKind" />
           <!-- 文章列表 -->
           <cpn-main-list :list="currentList" :loading="isloading" />
           <!-- 加载更多 -->
           <cpn-load-more
+            v-if="currentList.length"
             :current-page="curPage"
             :total-page="totalPage"
             @change-current-page="changeCurrentPage"
@@ -19,7 +20,7 @@
       </template>
       <template #rightBox>
         <info-block />
-        <new-block />
+        <new-block v-if="isSelf" />
       </template>
     </cpn-layout-tem>
   </div>
@@ -34,6 +35,8 @@ import CpnLoadMore from '@/components/CpnLoadMore'
 import InfoBlock from './InfoBlock'
 import NewBlock from './NewBlock'
 import { useArticleList } from '../PageMoment/hooks'
+import { useUserInfo } from './hooks'
+const { currentUserId, isSelf } = useUserInfo()
 const {
   curPage,
   totalPage,
@@ -42,7 +45,8 @@ const {
   //
   changeCurrentPage,
   searchForArticle,
-} = useArticleList(true)
+  changeSortKind,
+} = useArticleList(true, currentUserId)
 </script>
 
 <style lang="scss" scoped>

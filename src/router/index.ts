@@ -55,7 +55,7 @@ const routes: RouteRecordRaw[] = [
   },
 
   {
-    path: '/center',
+    path: '/center/:userId?',
     component: PageCenter,
     meta: {
       title: '欢迎回来 🤗',

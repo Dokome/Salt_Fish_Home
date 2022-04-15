@@ -27,7 +27,7 @@ import { NMessageProvider, NLoadingBarProvider } from 'naive-ui'
   width: 100%;
   min-width: 1200px;
   min-height: 600px;
-  // overflow: auto;
+  overflow: auto;
   background-color: $background-gray;
 }
 </style>

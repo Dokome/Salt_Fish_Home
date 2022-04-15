@@ -11,6 +11,7 @@
         v-for="item in menulist"
         :key="item.id"
         :class="item.id === currentNavTab ? 'current' : ''"
+        class="list-item"
         @click="changeCurrent(item.id, item.target)"
       >
         <n-icon size="20">
@@ -84,10 +85,21 @@ function changeSideMode() {
     }
 
     > :nth-child(n) {
+      margin-top: 0.5rem;
       border: none !important;
       cursor: var(--cursor-pointer);
       color: $text-gray;
       transition: 0.4s;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .list-item:hover {
+      color: $text-white !important;
+      font-weight: 700;
+      border-radius: 0.5rem;
+      background: $background-yellow;
+      padding-left: 1rem;
     }
   }
 
@@ -115,10 +127,19 @@ function changeSideMode() {
     }
 
     > :nth-child(n) {
+      margin-top: 0.5rem;
       border: none !important;
       cursor: var(--cursor-pointer);
       color: $text-gray;
       transition: 0.4s;
+    }
+
+    .list-item:hover {
+      color: $text-white !important;
+      font-weight: 700;
+      border-radius: 0.5rem;
+      background: $background-yellow;
+      padding-left: 1rem;
     }
   }
 

@@ -6,11 +6,12 @@
       <template #leftBox>
         <div class="moment-list">
           <!-- 文章排序 -->
-          <cpn-sort-block />
+          <cpn-sort-block v-if="currentList.length" @change-sort-kind="changeSortKind" />
           <!-- 文章列表 -->
           <cpn-main-list :list="currentList" :loading="isloading" />
           <!-- 加载更多 -->
           <cpn-load-more
+            v-if="currentList.length"
             :current-page="curPage"
             :total-page="totalPage"
             @change-current-page="changeCurrentPage"
@@ -44,6 +45,7 @@ const {
   //
   changeCurrentPage,
   searchForArticle,
+  changeSortKind,
 } = useArticleList()
 </script>
 
