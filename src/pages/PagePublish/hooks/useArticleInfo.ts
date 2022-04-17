@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import { uploadImage } from '@/service/file'
 import { postArticlePublish } from '@/service/article'
 import { useRouter } from 'vue-router'
+import { emptyContentValidhandle } from '@/utils/valid'
 
 export function useArticleInfo() {
   const router = useRouter()
@@ -63,12 +64,21 @@ export function useArticleInfo() {
       return (window as any).$message.error('上传失败 😥')
     }
 
+    if (emptyContentValidhandle(text.value)) {
+      return (window as any).$message.error('内容不能为空 😥')
+    }
+
+    if (emptyContentValidhandle(title.value)) {
+      return (window as any).$message.error('标题不能为空 😥')
+    }
+
     const success = await postArticlePublish({
       articleImg: cover.value,
       content: text.value,
       tag: tag.value,
       title: title.value,
     })
+
     isUploading.value = false
     if (success) {
       // 情况当前内容

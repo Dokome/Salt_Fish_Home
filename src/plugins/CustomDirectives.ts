@@ -1,5 +1,4 @@
 import { App, Directive } from 'vue'
-// import loadImg from '@/assets/image/bgc1.jpg'
 // 图片懒加载
 const LazyLoadImage: Directive = {
   mounted(el, { value }) {
@@ -12,7 +11,12 @@ const LazyLoadImage: Directive = {
           if (entry.isIntersecting) {
             // entry.target能够取得那个dom元素
             const img = (entry as any).target
-            img.src = value
+            let tempImg = new Image()
+            tempImg.src = value
+            tempImg.onload = () => {
+              img.src = value
+            }
+            ;(tempImg as any) = null
             // 解除监视
             imageObserve!.unobserve(img)
             imageObserve = null
@@ -21,6 +25,12 @@ const LazyLoadImage: Directive = {
       })
       imageObserve.observe(img)
     } else {
+      let tempImg = new Image()
+      tempImg.src = value
+      tempImg.onload = () => {
+        img.src = value
+      }
+      ;(tempImg as any) = null
       img.src = value
     }
   },

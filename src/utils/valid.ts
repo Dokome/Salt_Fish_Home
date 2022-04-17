@@ -25,3 +25,15 @@ export function emailCodeValidhandle(code: any): boolean {
 
   return regExp.test(code)
 }
+
+/**
+ * @验证内容是否为空
+ * @param content
+ * @returns
+ */
+export function emptyContentValidhandle(content: any): boolean {
+  if (typeof content === 'string') {
+    return !!content.trim().length
+  }
+  return !!content
+}

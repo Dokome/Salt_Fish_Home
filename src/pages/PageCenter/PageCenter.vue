@@ -1,5 +1,5 @@
 <template>
-  <div ref="center" class="center">
+  <div ref="scrollElement" class="center">
     <cpn-search-box @search-for-article="searchForArticle" />
     <cpn-layout-tem>
       <!-- 左边主要为列表 右边为杂项 -->
@@ -20,8 +20,8 @@
       </template>
       <template #rightBox>
         <info-block />
-        <new-block v-if="isSelf" ref="refer" />
-        <cpn-back-top :scroll-element="center" :refer-element="refer"></cpn-back-top>
+        <new-block v-if="isSelf" ref="referElement" />
+        <cpn-back-top :scroll-element="scrollElement" :refer-element="referElement"></cpn-back-top>
       </template>
     </cpn-layout-tem>
   </div>
@@ -36,9 +36,8 @@ import CpnLoadMore from '@/components/CpnLoadMore'
 import CpnBackTop from '@/components/CpnBackTop'
 import InfoBlock from './InfoBlock'
 import NewBlock from './NewBlock'
-import { useArticleList } from '../PageMoment/hooks'
+import { useArticleList, useBackToTop } from '@/hooks'
 import { useUserInfo } from './hooks'
-import { ref } from 'vue'
 const { currentUserId, isSelf } = useUserInfo()
 const {
   curPage,
@@ -50,8 +49,7 @@ const {
   searchForArticle,
   changeSortKind,
 } = useArticleList(true, currentUserId)
-const center = ref<HTMLDivElement>()
-const refer = ref<HTMLDivElement>()
+const { scrollElement, referElement } = useBackToTop()
 </script>
 
 <style lang="scss" scoped>

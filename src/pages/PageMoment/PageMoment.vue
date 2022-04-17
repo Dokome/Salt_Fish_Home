@@ -1,5 +1,5 @@
 <template>
-  <div class="moment">
+  <div ref="scrollElement" class="moment">
     <cpn-search-box @search-for-article="searchForArticle" />
     <cpn-layout-tem>
       <!-- 左边主要为列表 右边为杂项 -->
@@ -21,7 +21,8 @@
       <template #rightBox>
         <author-block />
         <hot-block />
-        <tags-block />
+        <tags-block ref="referElement" />
+        <cpn-back-top :scroll-element="scrollElement" :refer-element="referElement" />
       </template>
     </cpn-layout-tem>
   </div>
@@ -33,10 +34,12 @@ import CpnSearchBox from '@/components/CpnSearchBox'
 import CpnSortBlock from '@/components/CpnSortBlock'
 import CpnMainList from '@/components/CpnMainList'
 import CpnLoadMore from '@/components/CpnLoadMore'
+import CpnBackTop from '@/components/CpnBackTop'
 import HotBlock from './HotBlock'
 import AuthorBlock from './AuthorBlock'
 import TagsBlock from './TagsBlock'
-import { useArticleList } from './hooks'
+import { useBackToTop, useArticleList } from '@/hooks'
+
 const {
   curPage,
   totalPage,
@@ -47,6 +50,7 @@ const {
   searchForArticle,
   changeSortKind,
 } = useArticleList()
+const { scrollElement, referElement } = useBackToTop()
 </script>
 
 <style lang="scss" scoped>

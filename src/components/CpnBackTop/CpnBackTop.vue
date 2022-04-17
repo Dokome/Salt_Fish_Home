@@ -1,13 +1,20 @@
 <template>
   <transition name="fade">
-    <div v-if="show" class="backTop">123</div>
+    <div v-if="show" class="backTop" @click="scrollToTop">
+      <n-icon size="20" :color="yellow">
+        <arrow-up />
+      </n-icon>
+    </div>
   </transition>
 </template>
 
 <script lang="ts" setup>
-import { nextTick, ref } from 'vue'
 import type { ComponentPublicInstance } from 'vue'
+import { nextTick, ref } from 'vue'
+import { ArrowUp } from '@vicons/ionicons5'
+import { NIcon } from 'naive-ui'
 import { throttle } from 'lodash'
+import { yellow } from '@/assets/constant'
 const props = defineProps<{
   scrollElement: HTMLDivElement | undefined | ComponentPublicInstance
   referElement: HTMLDivElement | undefined | ComponentPublicInstance
@@ -26,36 +33,48 @@ const onScroll = throttle(function (e: Event) {
 
 function judgeType(el: HTMLDivElement | undefined | ComponentPublicInstance) {
   if (el instanceof HTMLDivElement) {
-    return 'htmlEl'
+    return props.scrollElement as HTMLElement
   } else if (typeof el === 'undefined') {
-    return 'undefined'
+    return {}
   }
-  return 'component'
+  return (props.scrollElement as ComponentPublicInstance).$el
+}
+
+// 滚动到顶部
+function scrollToTop() {
+  const el = judgeType(props.scrollElement)
+  // 动画实现
+  function animation() {
+    const offset = Math.floor(el.scrollTop / 2)
+    if (offset) {
+      el.scrollTo(0, offset)
+      requestAnimationFrame(animation)
+    }
+  }
+  requestAnimationFrame(animation)
 }
 
 nextTick(() => {
   // 添加监听滚动事件
-  if (judgeType(props.scrollElement) === 'htmlEl') {
-    ;(props.scrollElement as HTMLElement).addEventListener('scroll', onScroll)
-  } else if (judgeType(props.scrollElement) === 'component') {
-    ;(props.scrollElement as ComponentPublicInstance).$el.addEventListener('scroll', onScroll)
-  }
+  judgeType(props.scrollElement).addEventListener('scroll', onScroll)
   // 判断参考元素的高度
-  if (judgeType(props.referElement) === 'htmlEl') {
-    referBottom.value = (props.referElement as HTMLElement).getBoundingClientRect().bottom
-  } else if (judgeType(props.referElement) === 'component') {
-    referBottom.value = (
-      props.referElement as ComponentPublicInstance
-    ).$el.getBoundingClientRect().bottom
-  }
+  referBottom.value = judgeType(props.scrollElement).getBoundingClientRect().bottom
 })
 </script>
 
 <style lang="scss" scoped>
 .backTop {
   position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
   bottom: 2rem;
   right: 10rem;
+  background-color: $background-white;
+  cursor: var(--cursor-pointer);
 }
 
 .fade-enter-active,

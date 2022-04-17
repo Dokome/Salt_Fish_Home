@@ -2,7 +2,7 @@
   <cpn-block-card title="写点新东西 📝" :without-grow="true">
     <div class="main-publish">
       <n-button strong secondary type="info" @click="enterPublish"> 文章 </n-button>
-      <n-button strong secondary> 讨论 </n-button>
+      <!-- <n-button strong secondary> 讨论 </n-button> -->
     </div>
   </cpn-block-card>
 </template>

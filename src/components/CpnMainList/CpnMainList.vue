@@ -6,7 +6,7 @@
           v-lli="`http://112.74.108.218:8080/${article.articleImg}`"
           style="width: 10rem; height: 10rem; background-color: #f6f6f8"
           object-fit="cover"
-          :fallback-src="loadingImg"
+          :fallback-src="loadFail"
           :src="loadingImg"
         />
         <div class="item-detail">
@@ -50,6 +50,7 @@ import CpnBlockCard from '@/components/CpnBlockCard'
 import { NAvatar, NEllipsis, NTag, NSkeleton, NEmpty } from 'naive-ui'
 import { useRouter } from 'vue-router'
 import loadingImg from '@/assets/image/loading.png'
+import loadFail from '@/assets/image/loadfail.png'
 // props
 const props = defineProps<{
   list: ArticleListResponseMsg[]
