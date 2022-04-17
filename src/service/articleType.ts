@@ -38,3 +38,61 @@ export interface ArticleListResponseMsgWrapper {
 export interface ArticleListResponse extends BaseResponse {
   content: ArticleListResponseMsgWrapper
 }
+
+// 详情
+export interface ArticleDetailResponseMsg {
+  title: string
+  createTime: string
+  modifiedTime: string
+  authorName: string
+  viewCount: number
+  likeCount?: number
+  tag: number
+  content: string
+  articleImg: string
+}
+
+export interface ArticleDetailResponse extends BaseResponse {
+  content: ArticleDetailResponseMsg
+}
+
+// 评论
+export interface CommentListRequestParams {
+  articleId: number
+  commentId?: number
+  page: number
+  pageSize?: number
+}
+
+export interface CommentResponseUserInfo {
+  id: number
+  userId: number
+  sex: number
+  pageViews: number
+  focusOnCount: number
+  imgUrl: string
+  followedCount: number
+  sign: string
+  nick: string
+}
+export interface CommentResponseContentMsg {
+  id: number
+  parentId: number
+  type: number
+  gmtCreate: string
+  likeCount: number
+  commenterId: number
+  articleId: number
+  commentCount: number
+  content?: string
+  userinfo: CommentResponseUserInfo
+}
+
+export interface CommentResponseContentMsgWrapper {
+  commentList: CommentResponseContentMsg[]
+  commentCount: number
+}
+
+export interface CommentListResponse extends BaseResponse {
+  content: CommentResponseContentMsgWrapper
+}

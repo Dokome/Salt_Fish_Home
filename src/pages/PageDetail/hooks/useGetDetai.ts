@@ -1,41 +1,33 @@
 import { ref } from 'vue'
+import { useRoute } from 'vue-router'
+import { getArticleDetail } from '@/service/article'
+import { useLoadingBar } from 'naive-ui'
 
 export function useGetDetail() {
-  const markdown = ref(`
-  # heading 1
-  contentcontentcontent
-  contentcontentcontent
-  contentcontentcontent
-  contentcontentcontent
-  contentcontentcontent
+  const loadingBar = useLoadingBar()
+  const route = useRoute()
+  const { articleId } = route.params
+  const tag = ref(0)
+  const likeCount = ref(0)
+  const content = ref('...')
+  const authorName = ref('...')
+  const createTime = ref('...')
+  const title = ref('...')
 
-  ## heading 2
-  contentcontentcontent
-  contentcontentcontent
-  contentcontentcontent
-  contentcontentcontent
-  contentcontentcontent
+  async function getDetail() {
+    // 开始加载
+    loadingBar.start()
+    const detail = await getArticleDetail(parseInt(articleId as string))
+    loadingBar.finish()
+    tag.value = detail.tag
+    likeCount.value = detail.likeCount || 0
+    authorName.value = detail.authorName
+    createTime.value = detail.createTime
+    title.value = detail.title
+    content.value = detail.content
+  }
 
-  ### heading 3
-  contentcontentcontent
-  contentcontentcontent
-  contentcontentcontent
-  contentcontentcontent
-  contentcontentcontent
+  getDetail()
 
-  ## heading 2
-  contentcontentcontent
-  contentcontentcontent
-  contentcontentcontent
-  contentcontentcontent
-  contentcontentcontent
-
-  ### heading 3
-  contentcontentcontent
-  contentcontentcontent
-  contentcontentcontent
-  contentcontentcontent
-  contentcontentcontent
-  `)
-  return { markdown }
+  return { content, tag, likeCount, authorName, createTime, title, articleId }
 }

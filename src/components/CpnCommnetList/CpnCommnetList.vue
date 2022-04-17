@@ -1,38 +1,54 @@
 <template>
   <ul class="comment-list">
-    <cpn-block-card title="评论 💭"> </cpn-block-card>
-    <n-input-group>
-      <n-input placeholder="输入评论的内容"></n-input>
-      <n-button type="success">评论</n-button>
-    </n-input-group>
-    <div v-for="(item, index) in 3" :key="item" class="comment-item">
-      <cpn-block-card style="padding: 1rem" class="comment-item">
+    <cpn-block-card title="评论 💭" :can-hover="true">
+      <div class="comment-area">
+        <n-input
+          placeholder="输入评论的内容"
+          type="textarea"
+          :autosize="{ maxRows: 6, minRows: 1 }"
+          :maxlength="500"
+          show-count
+        ></n-input>
+        <n-button type="success" style="width: 5rem; align-self: flex-end">评论</n-button>
+      </div>
+    </cpn-block-card>
+    <div
+      v-for="(comment, index) in props.currentList"
+      :key="comment.commenterId"
+      class="comment-item"
+    >
+      <cpn-block-card style="padding: 1rem" class="comment-item" :can-hover="true">
         <div class="comment-item-header">
           <n-avatar
             :size="50"
             object-fit="cover"
-            src="https://img2.baidu.com/it/u=3810088904,2972189392&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=6682"
+            :src="comment.userinfo.imgUrl || defaultAvatar"
           ></n-avatar>
           <div class="header-info">
-            <span class="username">{{ 'Dokom' }}</span>
+            <span class="username">{{ comment.userinfo.nick || '佚名' }}</span>
             <span class="floor">{{ `${index + 1} 楼` }}</span>
           </div>
         </div>
         <div class="comment-item-main">
-          {{
-            '这种事情我见的多了，我只想说懂得都懂，不懂的我也不多说了，细细品吧，你也别来问我怎么回事，这里面利益牵扯太大了，说了对你我都没有好处，你就当不知道就行了，其余的我只能说这里水很深，牵扯到很多东西，详细情况你们很难找到的，网上大部分都删干净了，所以我说懂得都懂。懂的人都已经获利上岸了，不懂的人则永远不懂。关键懂的人都是自己悟的，你也不知道谁是懂的人，不知道向谁请教。大家都藏着掖着，生怕别人知道自己懂。懂了就能收割不懂的，你甚至都不知道自己不懂。只是在有些时候，某些人对某些事情，不懂装懂，还以为别人不懂，其实自己才是最不懂的。别人懂的够多了，不仅懂，还懂的超出范围。但是某些不懂的人，让这个懂的人完全教不懂。所以不懂的人永远不懂，只能不懂装懂，所以说懂得都懂，你懂了吗?'
-          }}
+          {{ comment.content || '...' }}
         </div>
         <div class="comment-item-footer">
-          <n-button type="warning">{{ `💬 回复 ${'3'}` }}</n-button>
-          <n-button type="error">{{ `😍 ${'123'}` }}</n-button>
-          <span>{{ `🕕 ${'2022 04 09'}` }}</span>
+          <n-button type="warning" @click="changeReplyHandle">{{ `💬 回复 ` }}</n-button>
+          <n-button type="error">{{ `😍 ${comment.likeCount}` }}</n-button>
+          <span>{{ `🕕 ${comment.gmtCreate}` }}</span>
         </div>
+        <!--  -->
         <div class="comment-reply-list">
-          <n-input-group>
-            <n-input placeholder="输入回复的内容"></n-input>
-            <n-button type="warning">回复</n-button>
-          </n-input-group>
+          <div class="reply-area">
+            <n-input
+              placeholder="输入回复的内容"
+              type="textarea"
+              :autosize="{ maxRows: 6, minRows: 1 }"
+              :maxlength="500"
+              show-count
+            ></n-input>
+            <n-button type="warning" style="width: 5rem">回复</n-button>
+          </div>
           <ul class="reply-list-main">
             <li v-for="ritem in 3" :key="ritem" class="main-item">
               <n-avatar
@@ -47,21 +63,40 @@
         </div>
       </cpn-block-card>
     </div>
-    <cpn-load-more></cpn-load-more>
+    <cpn-load-more :current-page="currentPage" :total-page="totalPage"></cpn-load-more>
   </ul>
 </template>
 
 <script lang="ts" setup>
+import type { CommentResponseContentMsg } from '@/service/articleType'
 import CpnBlockCard from '@/components/CpnBlockCard'
 import CpnLoadMore from '@/components/CpnLoadMore'
-import { NAvatar, NButton, NInput, NInputGroup } from 'naive-ui'
+import { NAvatar, NButton, NInput } from 'naive-ui'
+import defaultAvatar from '@/assets/image/default-avatar.png'
+
+const props = defineProps<{
+  currentPage: number
+  totalPage: number
+  currentList: CommentResponseContentMsg[]
+}>()
+
+function changeReplyHandle() {
+  console.log(123)
+}
 </script>
 
 <style lang="scss" scoped>
 .comment-list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
+
+  .comment-area {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: var(--padding-withTitle);
+  }
 
   .comment-item {
     display: flex;
@@ -116,6 +151,11 @@ import { NAvatar, NButton, NInput, NInputGroup } from 'naive-ui'
         }
       }
     }
+  }
+
+  .reply-area {
+    display: flex;
+    gap: 1rem;
   }
 }
 </style>

@@ -14,6 +14,7 @@ const props = defineProps<{
   title?: string
   background?: string
   withoutGrow?: boolean
+  canHover?: boolean
 }>()
 </script>
 

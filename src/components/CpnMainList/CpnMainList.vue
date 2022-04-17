@@ -1,13 +1,13 @@
 <template>
   <template v-if="props.list.length">
     <cpn-block-card v-for="article in props.list" :key="article.id">
-      <div class="main-list-item" @click="enterDetail">
+      <div class="main-list-item" @click="enterDetail(article.id)">
         <n-avatar
           v-lli="`http://112.74.108.218:8080/${article.articleImg}`"
           style="width: 10rem; height: 10rem; background-color: #f6f6f8"
           object-fit="cover"
-          fallback-src="/src/assets/image/loading.png"
-          src="/src/assets/image/loading.png"
+          :fallback-src="loadingImg"
+          :src="loadingImg"
         />
         <div class="item-detail">
           <div class="item-detail-header">{{ article.title }}</div>
@@ -45,10 +45,11 @@
 </template>
 
 <script lang="ts" setup>
+import type { ArticleListResponseMsg } from '@/service/articleType'
 import CpnBlockCard from '@/components/CpnBlockCard'
 import { NAvatar, NEllipsis, NTag, NSkeleton, NEmpty } from 'naive-ui'
 import { useRouter } from 'vue-router'
-import type { ArticleListResponseMsg } from '@/service/articleType'
+import loadingImg from '@/assets/image/loading.png'
 // props
 const props = defineProps<{
   list: ArticleListResponseMsg[]
@@ -76,8 +77,8 @@ const tags = [
 
 const router = useRouter()
 
-function enterDetail() {
-  router.push('/detail')
+function enterDetail(articleId: number) {
+  router.push(`/detail/${articleId}`)
 }
 </script>
 

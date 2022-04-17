@@ -1,12 +1,11 @@
-import { ref, onMounted } from 'vue'
+import { ref, watch, nextTick } from 'vue'
 import type { Ref } from 'vue'
 
-export function useHeadJump() {
+export function useHeadJump(content: Ref<string>) {
   const preview: Ref = ref(null)
-
   const titles: Ref = ref([])
   const detailWrapper: Ref = ref(null)
-  onMounted(() => {
+  function getHeadJump() {
     const anchors = preview.value?.$el.querySelectorAll('h1,h2,h3,h4,h5,h6')
     // 去除空白头部
     const titlelist = Array.from(anchors).filter((title: any) => !!title.innerText.trim())
@@ -20,7 +19,7 @@ export function useHeadJump() {
       lineIndex: el.getAttribute('data-v-md-line'),
       indent: hTags.indexOf(el.tagName),
     }))
-  })
+  }
 
   function handleAnchorClick(anchor: any) {
     const { lineIndex } = anchor
@@ -31,6 +30,14 @@ export function useHeadJump() {
       heading.scrollIntoView()
     }
   }
+
+  watch(content, () => {
+    if (content.value.length && content.value !== '...') {
+      nextTick(() => {
+        getHeadJump()
+      })
+    }
+  })
 
   return {
     // 编辑器

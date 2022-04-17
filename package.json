@@ -21,6 +21,7 @@
     "pinia": "^2.0.12",
     "sass": "^1.49.9",
     "vfonts": "^0.0.3",
+    "vite-plugin-compression": "^0.5.1",
     "vue": "^3.2.25",
     "vue-router": "4"
   },

@@ -2,12 +2,10 @@
   <div class="detail-info">
     <cpn-block-card title="关于">
       <div class="detail-info-list">
-        <div class="detail-info-author">{{ `作者 - ${'dokom'}` }}</div>
-        <div class="detail-info-time">{{ `发布时间 - ${'2022 4 10'}` }}</div>
+        <div class="detail-info-author">{{ `作者 - ${props.author}` }}</div>
+        <div class="detail-info-time">{{ `发布时间 - ${props.time}` }}</div>
         <div class="detail-info-tags">
-          <n-tag type="warning"> wu </n-tag>
-          <n-tag type="info"> 超人不会飞 </n-tag>
-          <n-tag type="primary"> 超人不会飞 </n-tag>
+          <n-tag :type="(tags[tag].color as any)"> {{ tags[tag].title }} </n-tag>
         </div>
       </div>
     </cpn-block-card>
@@ -17,6 +15,30 @@
 <script lang="ts" setup>
 import { NTag } from 'naive-ui'
 import CpnBlockCard from '@/components/CpnBlockCard'
+const props = defineProps<{
+  tag: number
+  author: string
+  time: string
+}>()
+
+const tags = [
+  {
+    title: '学习',
+    color: 'primary',
+  },
+  {
+    title: '生活',
+    color: 'info',
+  },
+  {
+    title: '吐槽',
+    color: 'warning',
+  },
+  {
+    title: '树洞',
+    color: 'error',
+  },
+]
 </script>
 
 <style lang="scss" scoped>

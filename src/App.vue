@@ -4,7 +4,7 @@
       <n-message-provider>
         <cpn-nav-side />
         <router-view v-slot="{ Component }" style="flex: 1">
-          <keep-alive>
+          <keep-alive :exclude="['PageDetail']">
             <component :is="Component" />
           </keep-alive>
         </router-view>

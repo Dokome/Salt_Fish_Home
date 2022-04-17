@@ -14,7 +14,6 @@
 <style lang="scss" scoped>
 .outWrapper {
   display: flex;
-  overflow: auto;
   gap: 2rem;
   padding: 2rem;
   min-height: 100vh;

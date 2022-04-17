@@ -3,14 +3,22 @@
     <cpn-layout-tem ref="detailWrapper">
       <template #leftBox>
         <div class="detail-main">
-          <cpn-block-card title="内容详情 📖">
-            <v-md-editor ref="preview" :model-value="markdown" mode="preview"></v-md-editor>
+          <cpn-block-card
+            :title="title || '内容详情 📖'"
+            style="min-height: 90vh"
+            :can-hover="true"
+          >
+            <v-md-editor ref="preview" :model-value="content" mode="preview"></v-md-editor>
           </cpn-block-card>
-          <cpn-commnet-list></cpn-commnet-list>
+          <cpn-commnet-list
+            :current-list="currentList"
+            :current-page="currentPage"
+            :total-page="totalPage"
+          ></cpn-commnet-list>
         </div>
       </template>
       <template #rightBox>
-        <info-block />
+        <info-block :author="authorName" :time="createTime" :tag="tag" />
         <recommand-block />
         <interact-block />
         <div class="detail-catalogue">
@@ -31,17 +39,21 @@
     </cpn-layout-tem>
   </div>
 </template>
+<script lang="ts">
+export default { name: 'PageDetail' }
+</script>
 
 <script lang="ts" setup>
-import { useGetDetail, useHeadJump } from './hooks'
+import { useGetDetail, useHeadJump, useComment } from './hooks'
 import CpnLayoutTem from '@/components/CpnLayoutTem'
 import CpnBlockCard from '@/components/CpnBlockCard'
 import CpnCommnetList from '@/components/CpnCommnetList'
 import RecommandBlock from './RecommandBlock'
 import InteractBlock from './InteractBlock'
 import InfoBlock from './InfoBlock'
-const { markdown } = useGetDetail()
-const { preview, detailWrapper, titles, handleAnchorClick } = useHeadJump()
+const { content, title, authorName, createTime, tag, articleId } = useGetDetail()
+const { preview, detailWrapper, titles, handleAnchorClick } = useHeadJump(content)
+const { totalPage, currentPage, currentList } = useComment(articleId as string)
 </script>
 
 <style lang="scss" scoped>
@@ -54,6 +66,8 @@ const { preview, detailWrapper, titles, handleAnchorClick } = useHeadJump()
   }
 
   .detail-catalogue {
+    position: sticky !important;
+    top: 2rem;
     width: 100%;
     display: flex;
   }
@@ -62,6 +76,8 @@ const { preview, detailWrapper, titles, handleAnchorClick } = useHeadJump()
     user-select: none;
     .catalogue {
       padding: var(--padding-withTitle);
+      max-height: 20rem;
+      overflow: auto;
     }
   }
 }

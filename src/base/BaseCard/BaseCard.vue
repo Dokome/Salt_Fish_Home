@@ -16,7 +16,12 @@ import { ref } from 'vue'
 import { cardShadow, gray } from '@/assets/constant'
 import BaseTitle from '@/base/BaseTitle'
 
-const props = defineProps<{ title?: string; background?: string; withoutGrow?: boolean }>()
+const props = defineProps<{
+  title?: string
+  background?: string
+  withoutGrow?: boolean
+  canHover?: boolean
+}>()
 
 const baseStyle: CSSProperties = {
   borderRadius: '0.5rem',
@@ -43,6 +48,9 @@ if (props.background) {
 }
 
 function mouseEnterHandle() {
+  if (props.canHover) {
+    return
+  }
   currentStyle.value.boxShadow = cardShadow
   currentStyle.value.transform = 'scale(1.02)'
 }
