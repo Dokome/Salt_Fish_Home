@@ -32,7 +32,9 @@
             </n-input>
           </n-input-group>
           <div class="register" @click="changeToRegister">没有账号？立即注册</div>
-          <div class="change" @click="changeLoginMethod">切换密码登录</div>
+          <div class="change" @click="changeLoginMethod">
+            {{ !loginMethod ? '切换密码登录' : '切换验证码登录' }}
+          </div>
           <n-button
             type="primary"
             strong

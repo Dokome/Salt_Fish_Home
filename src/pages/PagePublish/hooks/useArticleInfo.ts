@@ -64,11 +64,15 @@ export function useArticleInfo() {
       return (window as any).$message.error('上传失败 😥')
     }
 
-    if (emptyContentValidhandle(text.value)) {
+    if (!emptyContentValidhandle(text.value)) {
+      console.log(text.value)
+
+      isUploading.value = false
       return (window as any).$message.error('内容不能为空 😥')
     }
 
-    if (emptyContentValidhandle(title.value)) {
+    if (!emptyContentValidhandle(title.value)) {
+      isUploading.value = false
       return (window as any).$message.error('标题不能为空 😥')
     }
 

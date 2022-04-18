@@ -59,7 +59,8 @@ export interface ArticleDetailResponse extends BaseResponse {
 // 评论
 export interface CommentListRequestParams {
   articleId: number
-  commentId?: number
+  parentId?: number
+  rootId?: number
   page: number
   pageSize?: number
 }
@@ -85,7 +86,10 @@ export interface CommentResponseContentMsg {
   articleId: number
   commentCount: number
   content?: string
-  userinfo: CommentResponseUserInfo
+  commentUserInfo: CommentResponseUserInfo
+  commentedUserInfo: CommentResponseUserInfo
+  // 为方便分页添加
+  currentPage: number
 }
 
 export interface CommentResponseContentMsgWrapper {
@@ -95,4 +99,13 @@ export interface CommentResponseContentMsgWrapper {
 
 export interface CommentListResponse extends BaseResponse {
   content: CommentResponseContentMsgWrapper
+}
+
+export interface CommentReplyRequestParams {
+  articleId: number
+  commenterId?: number
+  commentedId?: number
+  parentId?: number
+  content: string
+  rootId: number
 }

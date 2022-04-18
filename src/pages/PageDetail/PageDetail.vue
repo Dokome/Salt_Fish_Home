@@ -11,16 +11,19 @@
             <v-md-editor ref="preview" :model-value="content" mode="preview"></v-md-editor>
           </cpn-block-card>
           <cpn-commnet-list
+            :article-id="(articleId as string)"
             :current-list="currentList"
             :current-page="currentPage"
             :total-page="totalPage"
+            @on-comment-update="onCommentUpdate"
+            @change-current-page="changeCurrentPage"
           ></cpn-commnet-list>
         </div>
       </template>
       <template #rightBox>
         <info-block :author="authorName" :time="createTime" :tag="tag" />
         <recommand-block />
-        <interact-block />
+        <interact-block ref="referElement" />
         <div class="detail-catalogue">
           <cpn-block-card title="目录 🔰">
             <div class="catalogue">
@@ -53,7 +56,9 @@ import InteractBlock from './InteractBlock'
 import InfoBlock from './InfoBlock'
 const { content, title, authorName, createTime, tag, articleId } = useGetDetail()
 const { preview, detailWrapper, titles, handleAnchorClick } = useHeadJump(content)
-const { totalPage, currentPage, currentList } = useComment(articleId as string)
+const { totalPage, currentPage, currentList, onCommentUpdate, changeCurrentPage } = useComment(
+  articleId as string
+)
 </script>
 
 <style lang="scss" scoped>

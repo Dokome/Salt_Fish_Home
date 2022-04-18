@@ -1,5 +1,5 @@
 <template>
-  <cpn-block-card>
+  <cpn-block-card v-if="props.totalPage > 1">
     <div class="load-more">
       <n-pagination
         :page="props.currentPage"

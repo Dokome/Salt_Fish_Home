@@ -1,5 +1,5 @@
 import type { ArticleListResponseMsg } from '@/service/articleType'
-import { ref, onMounted, watch } from 'vue'
+import { ref, onActivated, watch } from 'vue'
 import { getArticleList, getSearchArticleList } from '@/service/article'
 import { md2text } from '@/utils/md2text'
 // import { useUserStore } from '@/store'
@@ -68,7 +68,7 @@ export function useArticleList(needId = false, userId?: any) {
     changeCurrentPage(1)
   }
 
-  onMounted(() => {
+  onActivated(() => {
     getArticleListPublic(1)
   })
 

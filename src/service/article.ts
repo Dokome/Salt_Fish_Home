@@ -11,6 +11,7 @@ import {
   CommentListRequestParams,
   CommentListResponse,
   CommentResponseContentMsgWrapper,
+  CommentReplyRequestParams,
 } from './articleType'
 
 /**
@@ -104,25 +105,58 @@ export async function getArticleDetail(id: number): Promise<ArticleDetailRespons
 
 /**
  * @name 获取评论列表
- * @param param
+ * @param CommentListRequestParams
  * @returns
  */
 export async function getCommentList({
   articleId,
-  commentId,
+  parentId,
+  rootId,
   page,
   pageSize,
 }: CommentListRequestParams): Promise<CommentResponseContentMsgWrapper> {
   return new Promise<CommentResponseContentMsgWrapper>(async (resolve) => {
-    commentId = commentId || -1
+    parentId = parentId || -1
+    rootId = rootId || -1
     pageSize = pageSize || 5
     const { success, message, content } = await request.get<CommentListResponse>({
-      url: `/comment/getCommentsList/${articleId}/${commentId}/${page}/${pageSize}`,
+      url: `/comment/getCommentsList/${articleId}/${parentId}/${rootId}/${page}/${pageSize}`,
     })
 
     if (!success) {
       ;(window as any).$message.error(message)
     }
     resolve(content)
+  })
+}
+
+/**
+ * @name 发送评论和回复
+ * @param CommentReplyRequestParams
+ * @returns
+ */
+export async function postSendCommentReply({
+  articleId,
+  commenterId,
+  content: _content,
+  parentId,
+  commentedId,
+  rootId,
+}: CommentReplyRequestParams): Promise<boolean> {
+  return new Promise<boolean>(async (resolve) => {
+    const { success, message } = await request.post<CommentListResponse>({
+      url: `/comment/sendComment`,
+      data: {
+        articleId,
+        commenterId,
+        content: _content,
+        parentId,
+        commentedId,
+        rootId,
+      },
+    })
+
+    ;(window as any).$message[success ? 'success' : 'error'](message)
+    resolve(success)
   })
 }
