@@ -7,7 +7,9 @@ import type {
   RregisterResponse,
   EmailRegisterResponseMsg,
   LoginResponse,
-  LoginResponseMsg,
+  UserInfoResponseMsg,
+  UserInfoResponse,
+  UserInfoModifyRequestParams,
 } from './userType'
 // 获取 message 组件
 // const messager: MessageProviderInst =
@@ -134,6 +136,41 @@ export async function postloginWithPassword(email: string, password: string): Pr
       storage.set('__USER_LOGIN_TOKEN__', content.token, 3600 * 1000 * 24 * 7)
       storage.set('__USER_LOGIN_ID__', content.id, 3600 * 1000 * 24 * 7)
     }
+
+    ;(window as any).$message[success ? 'success' : 'error'](message)
+    resolve(success)
+  })
+}
+
+/**
+ * @name 获取用户信息
+ * @param id
+ * @returns
+ */
+export async function getUserInfo(id: number): Promise<UserInfoResponseMsg> {
+  return new Promise<UserInfoResponseMsg>(async (resolve) => {
+    const { success, content, message } = await request.get<UserInfoResponse>({
+      url: `/userInfo/getUserInfo/${id}`,
+    })
+
+    if (!success) {
+      ;(window as any).$message.error(message)
+    }
+    resolve(content)
+  })
+}
+
+/**
+ * @name 修改用户信息
+ * @param userInfo
+ * @returns
+ */
+export async function postModifyUserInfo(userInfo: UserInfoModifyRequestParams): Promise<boolean> {
+  return new Promise<boolean>(async (resolve) => {
+    const { success, message } = await request.post<UserInfoResponse>({
+      url: `/userInfo/modifyUserInfo`,
+      data: userInfo,
+    })
 
     ;(window as any).$message[success ? 'success' : 'error'](message)
     resolve(success)

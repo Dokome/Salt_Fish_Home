@@ -1,6 +1,13 @@
 <template>
   <div ref="scrollElement" class="center">
-    <cpn-search-box @search-for-article="searchForArticle" />
+    <cpn-search-box
+      :is-center="true"
+      :is-self="isSelf"
+      :current-user="userInfo?.nick"
+      @search-for-article="searchForArticle"
+      @modify-user-info="modifyUserInfo"
+    />
+
     <cpn-layout-tem>
       <!-- 左边主要为列表 右边为杂项 -->
       <template #leftBox>
@@ -19,14 +26,14 @@
         </div>
       </template>
       <template #rightBox>
-        <info-block />
+        <info-block :user-info="userInfo" />
         <new-block v-if="isSelf" ref="referElement" />
+        <modify-block :modal-show="modalShow" :user-info="userInfo" />
         <cpn-back-top :scroll-element="scrollElement" :refer-element="referElement"></cpn-back-top>
       </template>
     </cpn-layout-tem>
   </div>
 </template>
-
 <script lang="ts" setup>
 import CpnLayoutTem from '@/components/CpnLayoutTem'
 import CpnSearchBox from '@/components/CpnSearchBox'
@@ -36,9 +43,10 @@ import CpnLoadMore from '@/components/CpnLoadMore'
 import CpnBackTop from '@/components/CpnBackTop'
 import InfoBlock from './InfoBlock'
 import NewBlock from './NewBlock'
+import ModifyBlock from './ModifyBlock'
 import { useArticleList, useBackToTop } from '@/hooks'
 import { useUserInfo } from './hooks'
-const { currentUserId, isSelf } = useUserInfo()
+const { currentUserId, isSelf, userInfo, modalShow, modifyUserInfo } = useUserInfo()
 const {
   curPage,
   totalPage,

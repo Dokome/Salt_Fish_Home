@@ -13,15 +13,15 @@
       </n-input-group>
     </div>
     <div class="host">
-      <span>{{ `欢迎来到 ${'Dokom'} 的个人空间 🏳‍🌈` }}</span>
+      <span v-if="props.isCenter">{{
+        `欢迎来到 ${props.currentUser || '...'} 的个人空间 🏳‍🌈`
+      }}</span>
+      <span v-else>{{ `随便看看吧 😁` }}</span>
     </div>
     <div class="avatar">
-      <n-avatar
-        round
-        src="https://img2.baidu.com/it/u=3810088904,2972189392&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=6682"
-      />
-      <span>{{ '资料设置 ✏' }}</span>
-      <n-badge dot>
+      <n-avatar round :src="userInfo.imgUrl || defaultAvatar" />
+      <span v-if="props.isCenter && props.isSelf" @click="modifyUserInfo">{{ '资料设置 ✏' }}</span>
+      <n-badge v-if="props.isSelf" dot>
         <span style="color: #000">{{ '消息 📫' }}</span>
       </n-badge>
     </div>
@@ -29,14 +29,28 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue'
+import { UserInfoResponseMsg } from '@/service/userType'
 import { NInput, NIcon, NAvatar, NBadge, NInputGroup, NButton } from 'naive-ui'
 import { Search } from '@vicons/ionicons5'
-import { ref } from 'vue'
+import { useUserStore } from '@/store/user'
+import defaultAvatar from '@/assets/image/default-avatar.png'
+
 const searchVal = ref('')
-const emits = defineEmits(['searchForArticle'])
+const userStore = useUserStore()
+const userInfo: UserInfoResponseMsg = userStore.userInfo
+const emits = defineEmits(['searchForArticle', 'modifyUserInfo'])
+const props = defineProps<{
+  isCenter?: boolean
+  currentUser?: string
+  isSelf?: boolean
+}>()
 
 function searchForArticle() {
   emits('searchForArticle', searchVal.value)
+}
+function modifyUserInfo() {
+  emits('modifyUserInfo')
 }
 </script>
 

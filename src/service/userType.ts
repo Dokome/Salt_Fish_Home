@@ -18,3 +18,31 @@ export interface RregisterResponse extends BaseResponse {
 export interface LoginResponse extends BaseResponse {
   content: LoginResponseMsg
 }
+
+// 用户信息
+
+export interface UserInfoResponseMsg {
+  id: number
+  userId: number
+  sex: number
+  pageViews: number
+  focusOnCount: number
+  imgUrl: string
+  followedCount: number
+  sign: string
+  nick: string
+}
+
+export interface UserInfoResponse extends BaseResponse {
+  content: UserInfoResponseMsg
+}
+
+export interface UserInfoModifyRequestParams {
+  imgUrl: string
+  newPassword: string
+  password: string
+  nick: string
+  sex: number
+  sign: string
+  userId: number
+}

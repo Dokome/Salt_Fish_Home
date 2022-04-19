@@ -2,6 +2,7 @@ import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { getArticleDetail } from '@/service/article'
 import { useLoadingBar } from 'naive-ui'
+const loadText = '... 加载中'
 
 export function useGetDetail() {
   const loadingBar = useLoadingBar()
@@ -9,10 +10,10 @@ export function useGetDetail() {
   const { articleId } = route.params
   const tag = ref(0)
   const likeCount = ref(0)
-  const content = ref('...')
-  const authorName = ref('...')
-  const createTime = ref('...')
-  const title = ref('...')
+  const content = ref(loadText)
+  const authorName = ref(loadText)
+  const createTime = ref(loadText)
+  const title = ref(loadText)
 
   async function getDetail() {
     // 开始加载

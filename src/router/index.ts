@@ -55,7 +55,7 @@ const routes: RouteRecordRaw[] = [
   },
 
   {
-    path: '/center/:userId?',
+    path: '/center/:userId(\\d+)?',
     component: () => import('@/pages/PageCenter'),
     meta: {
       title: '欢迎回来 🤗',
@@ -78,7 +78,7 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
-    path: '/detail/:articleId',
+    path: '/detail/:articleId(\\d+)',
     component: () => import('@/pages/PageDetail'),
     meta: {
       title: '文章详情 📃',

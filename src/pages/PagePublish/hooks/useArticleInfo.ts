@@ -65,8 +65,6 @@ export function useArticleInfo() {
     }
 
     if (!emptyContentValidhandle(text.value)) {
-      console.log(text.value)
-
       isUploading.value = false
       return (window as any).$message.error('内容不能为空 😥')
     }

@@ -3,14 +3,14 @@
     <div class="main-info">
       <n-avatar
         round
-        src="https://img2.baidu.com/it/u=3810088904,2972189392&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=6682"
+        :src="props.userInfo?.imgUrl || defaultAvatar"
         :size="240"
         :color="grey"
         object-fit="cover"
       />
       <div class="main-info-username">
-        {{ 'Dokom' }}
-        <n-icon size="30" :color="blue">
+        {{ props.userInfo?.nick || '加载中 ...' }}
+        <n-icon size="30" :color="props.userInfo?.sex ? blue : pink">
           <male />
         </n-icon>
       </div>
@@ -21,26 +21,20 @@
         <span>{{ `${20} 天` }}</span>
       </div>
       <div class="main-info-sign">
-        {{ 'IM A SALT FISH WITH BIG DREAM IM A SALT FISH WITH BIG DREAM' }}
+        {{ props.userInfo?.sign || '该用户很懒，没有留下什么' }}
       </div>
       <div class="main-info-data">
         <div>
-          <n-icon size="20">
-            <eye-outline />
-          </n-icon>
-          <span>{{ `112.3 K` }}</span>
+          <n-icon size="20" :component="EyeOutline" />
+          <span>{{ props.userInfo?.pageViews || 0 }}</span>
         </div>
         <div>
-          <n-icon size="20" :color="yellow">
-            <star />
-          </n-icon>
-          <span>{{ `110` }}</span>
+          <n-icon size="20" :color="yellow" :component="Star" />
+          <span>{{ props.userInfo?.focusOnCount || 0 }}</span>
         </div>
         <div>
-          <n-icon size="20" :color="blue">
-            <people />
-          </n-icon>
-          <span>{{ `110` }}</span>
+          <n-icon size="20" :color="blue" :component="People" />
+          <span>{{ props.userInfo?.followedCount || 0 }}</span>
         </div>
       </div>
       <div class="main-info-follow">
@@ -54,9 +48,14 @@
 <script lang="ts" setup>
 import { NAvatar, NIcon, NButton } from 'naive-ui'
 import { Fish, EyeOutline, Star, People, Male } from '@vicons/ionicons5'
-import { grey, yellow, blue, white } from '@/assets/constant'
+import { grey, yellow, blue, white, pink } from '@/assets/constant'
 import CpnBlockCard from '@/components/CpnBlockCard'
 import bgc2 from '@/assets/image/bgc2.jpg'
+import defaultAvatar from '@/assets/image/default-avatar.png'
+import { UserInfoResponseMsg } from '@/service/userType'
+const props = defineProps<{
+  userInfo: UserInfoResponseMsg | undefined
+}>()
 </script>
 
 <style lang="scss" scoped>
