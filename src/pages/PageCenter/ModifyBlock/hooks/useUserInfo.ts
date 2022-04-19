@@ -4,6 +4,7 @@ import { postModifyUserInfo, getUserInfo } from '@/service/user'
 import { UserInfoResponseMsg } from '@/service/userType'
 import { useUserStore } from '@/store'
 import type { UploadCustomRequestOptions } from 'naive-ui'
+import hexMd5 from '@/utils/encrypt'
 
 export function useUserInfo(props: any) {
   const show = ref(false)
@@ -32,11 +33,20 @@ export function useUserInfo(props: any) {
 
   async function modifyUserInfo() {
     loading.value = true
+    const { newPassword, password } = userInfo.value as any
+    if (newPassword) {
+      ;(userInfo as any).value.newPassword = hexMd5(newPassword)
+      ;(userInfo as any).value.password = hexMd5(password)
+    }
     const success = await postModifyUserInfo(userInfo.value as any)
     loading.value = false
     if (success) {
       const info = await getUserInfo((userInfo as any).value.userId)
       userStore.updateUserInfo(info)
+      show.value = false
+    } else {
+      ;(userInfo as any).value.newPassword = ''
+      ;(userInfo as any).value.password = ''
     }
   }
 

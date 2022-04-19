@@ -1,8 +1,8 @@
 import { useRoute } from 'vue-router'
 import { useUserStore } from '@/store'
 import { getUserInfo } from '@/service/user'
-import { onActivated, ref } from 'vue'
-import { UserInfoResponseMsg } from '@/service/userType'
+import { onActivated, ref, computed } from 'vue'
+// import { UserInfoResponseMsg } from '@/service/userType'
 
 export function useUserInfo() {
   const route = useRoute()
@@ -10,7 +10,7 @@ export function useUserInfo() {
   // const userInfo = userStore.userInfo
   // 当有 userId 或者 userId 为自己的时候表示个人主页
   const currentUserId = route.params.userId || userStore.userId
-  const userInfo = ref<UserInfoResponseMsg>()
+  const userInfo = computed(() => userStore.userInfo)
   const modalShow = ref(false)
   let isSelf = currentUserId === userStore.userId
 
@@ -18,7 +18,6 @@ export function useUserInfo() {
   async function getCurrentUserInfo() {
     const info = await getUserInfo(currentUserId)
     isSelf && userStore.updateUserInfo(info)
-    userInfo.value = info
   }
 
   function modifyUserInfo() {

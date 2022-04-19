@@ -3,7 +3,11 @@
     <div class="main-info">
       <n-avatar
         round
-        :src="props.userInfo?.imgUrl || defaultAvatar"
+        :src="
+          props.userInfo?.imgUrl
+            ? `http://112.74.108.218:8080/${props.userInfo?.imgUrl}`
+            : defaultAvatar
+        "
         :size="240"
         :color="grey"
         object-fit="cover"
