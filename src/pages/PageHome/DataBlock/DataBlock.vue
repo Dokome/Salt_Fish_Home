@@ -2,7 +2,7 @@
   <cpn-block-card :background="bgc2">
     <div class="home-data">
       <div class="home-data-title">🕐 {{ currentDate }}</div>
-      <div>365</div>
+      <div>{{ last }}</div>
       <div>运 / 行 / 天 / 数 🚩</div>
       <div>120132</div>
       <div>今 / 日 / 访 / 问 🏁</div>
@@ -17,6 +17,7 @@ import { ref } from 'vue'
 import bgc2 from '@/assets/image/bgc2.jpg'
 
 const currentDate = ref(dayjs().format('M月D日 hh:mm:ss'))
+const last = Math.floor((+dayjs() - +dayjs('2022-04-10')) / 3600 / 1000 / 24)
 
 setInterval(() => {
   currentDate.value = dayjs().format('M月D日 hh:mm:ss')

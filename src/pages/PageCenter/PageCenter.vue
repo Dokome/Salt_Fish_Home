@@ -3,7 +3,7 @@
     <cpn-search-box
       :is-center="true"
       :is-self="isSelf"
-      :current-user="userInfo?.nick"
+      :current-user="currentUser?.nick"
       @search-for-article="searchForArticle"
       @modify-user-info="modifyUserInfo"
     />
@@ -26,7 +26,7 @@
         </div>
       </template>
       <template #rightBox>
-        <info-block :user-info="userInfo" />
+        <info-block :user-info="currentUser" />
         <new-block v-if="isSelf" ref="referElement" />
         <modify-block :modal-show="modalShow" :user-info="userInfo" />
         <cpn-back-top :scroll-element="scrollElement" :refer-element="referElement"></cpn-back-top>
@@ -46,7 +46,7 @@ import NewBlock from './NewBlock'
 import ModifyBlock from './ModifyBlock'
 import { useArticleList, useBackToTop } from '@/hooks'
 import { useUserInfo } from './hooks'
-const { currentUserId, isSelf, userInfo, modalShow, modifyUserInfo } = useUserInfo()
+const { currentUserId, currentUser, isSelf, userInfo, modalShow, modifyUserInfo } = useUserInfo()
 const {
   curPage,
   totalPage,

@@ -18,7 +18,7 @@
       }}</span>
       <span v-else>{{ `随便看看吧 😁` }}</span>
     </div>
-    <div class="avatar">
+    <div class="avatar" @click="backToHome">
       <n-avatar
         :src="userInfo.imgUrl ? `http://112.74.108.218:8080/${userInfo.imgUrl}` : defaultAvatar"
         round
@@ -38,7 +38,6 @@ import { NInput, NIcon, NAvatar, NBadge, NInputGroup, NButton } from 'naive-ui'
 import { Search } from '@vicons/ionicons5'
 import { useUserStore } from '@/store/user'
 import defaultAvatar from '@/assets/image/default-avatar.png'
-
 const searchVal = ref('')
 const userStore = useUserStore()
 const userInfo = computed(() => userStore.userInfo)
@@ -54,6 +53,9 @@ function searchForArticle() {
 }
 function modifyUserInfo() {
   emits('modifyUserInfo')
+}
+function backToHome() {
+  location.href = '/center'
 }
 </script>
 

@@ -14,6 +14,7 @@ export function useGetDetail() {
   const authorName = ref(loadText)
   const createTime = ref(loadText)
   const title = ref(loadText)
+  const userId = ref(-1)
 
   async function getDetail() {
     // 开始加载

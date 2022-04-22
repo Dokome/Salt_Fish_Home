@@ -30,9 +30,13 @@
           <n-avatar
             :size="50"
             object-fit="cover"
-            :src="comment.commentUserInfo.imgUrl || defaultAvatar"
+            :src="
+              comment.commentUserInfo.imgUrl
+                ? `http://112.74.108.218:8080/${comment.commentUserInfo.imgUrl}`
+                : defaultAvatar
+            "
           ></n-avatar>
-          <div class="header-info">
+          <div class="header-info" @click="backToHome(comment.commentUserInfo.userId)">
             <span class="username">{{ comment.commentUserInfo.nick || '佚名' }}</span>
             <span class="floor">{{ `${comment.gmtCreate}` }}</span>
           </div>
@@ -64,9 +68,13 @@
               <n-avatar
                 :size="30"
                 object-fit="cover"
-                :src="reply.commentUserInfo.imgUrl || defaultAvatar"
+                :src="
+                  reply.commentUserInfo.imgUrl
+                    ? `http://112.74.108.218:8080/${reply.commentUserInfo.imgUrl}`
+                    : defaultAvatar
+                "
               ></n-avatar>
-              <span class="username">{{
+              <span class="username" @click="backToHome(reply.commentUserInfo.userId)">{{
                 `${reply.commentUserInfo.nick || '佚名'}${
                   reply.parentId === -1 ? '' : ` 回复 ${reply.commentedUserInfo.nick}`
                 } : `
@@ -168,6 +176,10 @@ const {
   pageChangeHandle,
   changeCurrentTarget,
 } = useCommentReply(parseInt(props.articleId), emits)
+
+function backToHome(userId: number | string) {
+  location.href = `/center/${userId}`
+}
 </script>
 
 <style lang="scss" scoped>

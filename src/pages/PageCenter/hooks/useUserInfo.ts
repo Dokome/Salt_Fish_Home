@@ -13,11 +13,14 @@ export function useUserInfo() {
   const userInfo = computed(() => userStore.userInfo)
   const modalShow = ref(false)
   let isSelf = currentUserId === userStore.userId
+  //
+  const currentUser = ref()
 
   // 获取用户信息
   async function getCurrentUserInfo() {
     const info = await getUserInfo(currentUserId)
     isSelf && userStore.updateUserInfo(info)
+    currentUser.value = info
   }
 
   function modifyUserInfo() {
@@ -32,6 +35,7 @@ export function useUserInfo() {
   return {
     userInfo,
     currentUserId,
+    currentUser,
     isSelf,
     modalShow,
     //

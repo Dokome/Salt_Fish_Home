@@ -24,7 +24,7 @@
         <info-block :author="authorName" :time="createTime" :tag="tag" />
         <recommand-block />
         <interact-block ref="referElement" />
-        <div class="detail-catalogue">
+        <div v-if="titles?.length" class="detail-catalogue">
           <cpn-block-card title="目录 🔰">
             <div class="catalogue">
               <div
