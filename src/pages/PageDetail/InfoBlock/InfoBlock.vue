@@ -38,6 +38,10 @@ const tags = [
     title: '树洞',
     color: 'error',
   },
+  {
+    title: '加载中...',
+    color: 'primary',
+  },
 ]
 </script>
 

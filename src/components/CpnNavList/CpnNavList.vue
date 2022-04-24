@@ -1,32 +1,25 @@
 <template>
-  <ul class="command">
-    <li v-for="item in hotlist" :key="item.id">{{ item.title }}</li>
+  <ul v-if="list.length" class="command">
+    <li v-for="item in props.list" :key="item.id" @click="enterArticleDetail(item.id)">
+      {{ item.title }}
+    </li>
   </ul>
+  <div v-else class="loading">
+    <n-skeleton text :repeat="3" />
+  </div>
 </template>
 
 <script lang="ts" setup>
-const hotlist = [
-  {
-    id: 1,
-    title: '前后端常见网络安全问题及防范措施',
-  },
-  {
-    id: 2,
-    title: '你所不知道的Vue插槽',
-  },
-  {
-    id: 3,
-    title: '使用eslint替代prettier格式化',
-  },
-  {
-    id: 4,
-    title: 'vue+electron实现对图片的截选，拖拽等功能。',
-  },
-  {
-    id: 5,
-    title: 'electron + vue项目实现打印小票功能',
-  },
-]
+import { NSkeleton } from 'naive-ui'
+import { ArticleListResponseMsg } from '@/service/articleType'
+
+const props = defineProps<{
+  list: ArticleListResponseMsg[]
+}>()
+
+function enterArticleDetail(id: number) {
+  location.href = `/detail/${id}`
+}
 </script>
 
 <style lang="scss" scoped>
@@ -49,5 +42,12 @@ const hotlist = [
       color: $text-white;
     }
   }
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 1rem;
 }
 </style>

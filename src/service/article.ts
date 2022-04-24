@@ -8,6 +8,7 @@ import {
   ArticleListResponseMsgWrapper,
   ArticleDetailResponse,
   ArticleDetailResponseMsg,
+  ArticleListResponseMsg,
   CommentListRequestParams,
   CommentListResponse,
   CommentResponseContentMsgWrapper,
@@ -100,6 +101,48 @@ export async function getArticleDetail(id: number): Promise<ArticleDetailRespons
       ;(window as any).$message.error(message)
     }
     resolve(content)
+  })
+}
+
+/**
+ * @name 获取热榜文章
+ * @param count
+ * @returns
+ */
+export async function getHotArticle(count: number): Promise<ArticleListResponseMsg[]> {
+  return new Promise<ArticleListResponseMsg[]>(async (resolve) => {
+    const { success, message, content } = await request.get<ArticleListResponse>({
+      url: `/article/hotArticle/${count}`,
+    })
+
+    if (!success) {
+      ;(window as any).$message.error(message)
+    }
+
+    resolve(content as any)
+  })
+}
+
+/**
+ * @name 获取热榜文章
+ * @param count
+ * @param tag
+ * @returns
+ */
+export async function getRecommendList(
+  count: number,
+  tag: number
+): Promise<ArticleListResponseMsg[]> {
+  return new Promise<ArticleListResponseMsg[]>(async (resolve) => {
+    const { success, message, content } = await request.get<ArticleListResponse>({
+      url: `/article/recommend/${tag}/${count}`,
+    })
+
+    if (!success) {
+      ;(window as any).$message.error(message)
+    }
+
+    resolve(content as any)
   })
 }
 

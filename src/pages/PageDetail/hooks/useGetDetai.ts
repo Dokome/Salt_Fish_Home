@@ -8,7 +8,7 @@ export function useGetDetail() {
   const loadingBar = useLoadingBar()
   const route = useRoute()
   const { articleId } = route.params
-  const tag = ref(0)
+  const tag = ref(4)
   const likeCount = ref(0)
   const content = ref(loadText)
   const authorName = ref(loadText)
@@ -20,6 +20,7 @@ export function useGetDetail() {
     // 开始加载
     loadingBar.start()
     const detail = await getArticleDetail(parseInt(articleId as string))
+
     loadingBar.finish()
     tag.value = detail.tag
     likeCount.value = detail.likeCount || 0
