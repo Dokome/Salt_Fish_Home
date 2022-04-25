@@ -112,7 +112,7 @@ export async function getArticleDetail(id: number): Promise<ArticleDetailRespons
 export async function getHotArticle(count: number): Promise<ArticleListResponseMsg[]> {
   return new Promise<ArticleListResponseMsg[]>(async (resolve) => {
     const { success, message, content } = await request.get<ArticleListResponse>({
-      url: `/article/hotArticle/${count}`,
+      url: `/index/hotArticle/${count}`,
     })
 
     if (!success) {
@@ -213,6 +213,21 @@ export async function getArticleLike(id: number): Promise<void> {
   return new Promise<void>(async () => {
     const { success, message } = await request.get<BaseResponse>({
       url: `/article/likeArticle/${id}`,
+    })
+
+    ;(window as any).$message[success ? 'success' : 'error'](message)
+  })
+}
+
+/**
+ * @name 文章点踩
+ * @param id
+ * @returns
+ */
+export async function getArticleDislike(id: number): Promise<void> {
+  return new Promise<void>(async () => {
+    const { success, message } = await request.get<BaseResponse>({
+      url: `/article/disLikeArticle/${id}`,
     })
 
     ;(window as any).$message[success ? 'success' : 'error'](message)

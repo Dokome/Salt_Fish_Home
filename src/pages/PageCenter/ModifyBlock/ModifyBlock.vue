@@ -14,7 +14,7 @@
               show-count
               clearable
               placeholder="在此输入修改后的用户名"
-              :value="userInfo.nick"
+              :value="userInfo!.nick"
               @update-value="changeNickHandle"
             />
           </n-input-group>
@@ -55,7 +55,7 @@
               show-count
               clearable
               placeholder="输入您的个性签名"
-              :value="userInfo.sign"
+              :value="userInfo!.sign"
               @update-value="changeSignHandle"
             />
           </n-input-group>
@@ -64,7 +64,7 @@
             <n-select
               :options="options"
               placeholder="性别"
-              :value="userInfo.sex"
+              :value="userInfo!.sex"
               @update-value="changeGenderHandle"
             />
           </n-input-group>

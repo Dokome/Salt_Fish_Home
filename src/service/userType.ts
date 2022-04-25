@@ -31,6 +31,9 @@ export interface UserInfoResponseMsg {
   followedCount: number
   sign: string
   nick: string
+  articleCount: string
+  gmtCreate: string
+  focus: boolean
 }
 
 export interface UserInfoResponse extends BaseResponse {
@@ -45,4 +48,17 @@ export interface UserInfoModifyRequestParams {
   sex: number
   sign: string
   userId: number
+}
+
+// 关注用户
+
+export interface UserFocusRequestParams {
+  focusOnUser: number
+  followedUser: number
+}
+
+// 热门用户
+
+export interface UserHotInfoResponse extends BaseResponse {
+  content: UserInfoResponseMsg[]
 }

@@ -22,15 +22,15 @@
         <n-icon size="20" :color="white">
           <fish />
         </n-icon>
-        <span>{{ `${20} 天` }}</span>
+        <span>{{ `${day} 天` }}</span>
       </div>
       <div class="main-info-sign">
         {{ props.userInfo?.sign || '该用户很懒，没有留下什么' }}
       </div>
       <div class="main-info-data">
         <div>
-          <n-icon size="20" :component="EyeOutline" />
-          <span>{{ props.userInfo?.pageViews || 0 }}</span>
+          <n-icon size="20" :component="Albums" />
+          <span>{{ props.userInfo?.articleCount }}</span>
         </div>
         <div>
           <n-icon size="20" :color="yellow" :component="Star" />
@@ -42,24 +42,58 @@
         </div>
       </div>
       <div class="main-info-follow">
-        <n-button type="primary">🤩 关注</n-button>
-        <n-button type="error">😥 举报</n-button>
+        <n-button
+          :disabled="loading"
+          :type="originFocusState ? 'warning' : 'primary'"
+          @click="focusUserHandle"
+          >{{ originFocusState ? '😡 取消关注' : '🤩 关注' }}</n-button
+        >
+        <n-button type="error" @click="reportUserHandle">😥 举报</n-button>
       </div>
     </div>
   </cpn-block-card>
 </template>
 
 <script lang="ts" setup>
-import { NAvatar, NIcon, NButton } from 'naive-ui'
-import { Fish, EyeOutline, Star, People, Male } from '@vicons/ionicons5'
-import { grey, yellow, blue, white, pink } from '@/assets/constant'
 import CpnBlockCard from '@/components/CpnBlockCard'
+import { NAvatar, NIcon, NButton } from 'naive-ui'
+import { Fish, Albums, Star, People, Male } from '@vicons/ionicons5'
+import { grey, yellow, blue, white, pink } from '@/assets/constant'
 import bgc2 from '@/assets/image/bgc2.jpg'
 import defaultAvatar from '@/assets/image/default-avatar.png'
 import { UserInfoResponseMsg } from '@/service/userType'
+import { postFocusUser } from '@/service/user'
+import { computed, ref } from 'vue'
+import dayjs from 'dayjs'
+
 const props = defineProps<{
   userInfo: UserInfoResponseMsg | undefined
+  userId: number
 }>()
+const emits = defineEmits(['getCurrentUserInfo'])
+// 操作的关注状态
+const loading = ref(false)
+const originFocusState = computed(() => props.userInfo?.focus)
+
+const day = computed(() =>
+  Math.floor((+dayjs() - +dayjs(props.userInfo?.gmtCreate)) / 3600 / 1000 / 24)
+)
+
+function reportUserHandle() {
+  ;(window as any).$message.success('举报成功，我们将观察该用户后续行为')
+}
+
+async function focusUserHandle() {
+  loading.value = true
+  const success = await postFocusUser({
+    focusOnUser: props.userId,
+    followedUser: props.userInfo!.userId,
+  })
+  if (success) {
+    emits('getCurrentUserInfo')
+  }
+  loading.value = false
+}
 </script>
 
 <style lang="scss" scoped>

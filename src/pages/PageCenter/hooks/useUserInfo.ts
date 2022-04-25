@@ -44,5 +44,6 @@ export function useUserInfo() {
     modalShow,
     //
     modifyUserInfo,
+    getCurrentUserInfo,
   }
 }

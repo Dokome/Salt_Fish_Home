@@ -26,7 +26,11 @@
         </div>
       </template>
       <template #rightBox>
-        <info-block :user-info="currentUser" />
+        <info-block
+          :user-info="currentUser"
+          :user-id="userInfo.userId"
+          @get-current-user-info="getCurrentUserInfo"
+        />
         <new-block v-if="isSelf" ref="referElement" />
         <modify-block :modal-show="modalShow" :user-info="userInfo" />
         <cpn-back-top :scroll-element="scrollElement" :refer-element="referElement"></cpn-back-top>
@@ -46,7 +50,15 @@ import NewBlock from './NewBlock'
 import ModifyBlock from './ModifyBlock'
 import { useArticleList, useBackToTop } from '@/hooks'
 import { useUserInfo } from './hooks'
-const { currentUserId, currentUser, isSelf, userInfo, modalShow, modifyUserInfo } = useUserInfo()
+const {
+  currentUserId,
+  currentUser,
+  isSelf,
+  userInfo,
+  modalShow,
+  getCurrentUserInfo,
+  modifyUserInfo,
+} = useUserInfo()
 const {
   curPage,
   totalPage,

@@ -10,6 +10,8 @@ import type {
   UserInfoResponseMsg,
   UserInfoResponse,
   UserInfoModifyRequestParams,
+  UserFocusRequestParams,
+  UserHotInfoResponse,
 } from './userType'
 // 获取 message 组件
 // const messager: MessageProviderInst =
@@ -174,5 +176,36 @@ export async function postModifyUserInfo(userInfo: UserInfoModifyRequestParams):
 
     ;(window as any).$message[success ? 'success' : 'error'](message)
     resolve(success)
+  })
+}
+/**
+ * @name 关注用户
+ * @param param
+ * @returns
+ */
+export async function postFocusUser(param: UserFocusRequestParams): Promise<boolean> {
+  return new Promise<boolean>(async (resolve) => {
+    const { success, message } = await request.post<UserInfoResponse>({
+      url: `/userInfo/focusUser`,
+      data: param,
+    })
+
+    ;(window as any).$message[success ? 'success' : 'error'](message)
+    resolve(success)
+  })
+}
+
+/**
+ * @name 获取热门作者
+ * @param count
+ * @returns
+ */
+export async function getHotUser(count: number): Promise<UserInfoResponseMsg[]> {
+  return new Promise<UserInfoResponseMsg[]>(async (resolve) => {
+    const { content } = await request.get<UserHotInfoResponse>({
+      url: `/article/activeAuthor/${count}`,
+    })
+
+    resolve(content)
   })
 }
