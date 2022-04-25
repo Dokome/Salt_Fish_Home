@@ -18,15 +18,16 @@
       }}</span>
       <span v-else>{{ `随便看看吧 😁` }}</span>
     </div>
-    <div class="avatar" @click="backToHome">
+    <div class="avatar">
       <n-avatar
         :src="userInfo.imgUrl ? `http://112.74.108.218:8080/${userInfo.imgUrl}` : defaultAvatar"
         round
+        @click="backToHome"
       />
       <span v-if="props.isCenter && props.isSelf" @click="modifyUserInfo">{{ '资料设置 ✏' }}</span>
-      <n-badge v-if="props.isSelf" dot>
+      <!-- <n-badge v-if="props.isSelf" dot>
         <span style="color: #000">{{ '消息 📫' }}</span>
-      </n-badge>
+      </n-badge> -->
     </div>
   </div>
 </template>
@@ -34,7 +35,7 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
 // import { UserInfoResponseMsg } from '@/service/userType'
-import { NInput, NIcon, NAvatar, NBadge, NInputGroup, NButton } from 'naive-ui'
+import { NInput, NIcon, NAvatar, /* NBadge, */ NInputGroup, NButton } from 'naive-ui'
 import { Search } from '@vicons/ionicons5'
 import { useUserStore } from '@/store/user'
 import defaultAvatar from '@/assets/image/default-avatar.png'

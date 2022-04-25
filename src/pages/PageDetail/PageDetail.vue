@@ -23,7 +23,7 @@
       <template #rightBox>
         <info-block :author="authorName" :time="createTime" :tag="tag" />
         <recommand-block :tag="tag" />
-        <interact-block ref="referElement" />
+        <interact-block ref="referElement" :article-id="Number(articleId)" />
         <div v-if="titles?.length" class="detail-catalogue">
           <cpn-block-card title="目录 🔰">
             <div class="catalogue">

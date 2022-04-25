@@ -203,3 +203,18 @@ export async function postSendCommentReply({
     resolve(success)
   })
 }
+
+/**
+ * @name 文章点赞
+ * @param id
+ * @returns
+ */
+export async function getArticleLike(id: number): Promise<void> {
+  return new Promise<void>(async () => {
+    const { success, message } = await request.get<BaseResponse>({
+      url: `/article/likeArticle/${id}`,
+    })
+
+    ;(window as any).$message[success ? 'success' : 'error'](message)
+  })
+}

@@ -1,7 +1,7 @@
 import { useRoute } from 'vue-router'
 import { useUserStore } from '@/store'
 import { getUserInfo } from '@/service/user'
-import { onActivated, ref, computed } from 'vue'
+import { onActivated, ref, computed, watch } from 'vue'
 // import { UserInfoResponseMsg } from '@/service/userType'
 
 export function useUserInfo() {
@@ -26,6 +26,10 @@ export function useUserInfo() {
   function modifyUserInfo() {
     modalShow.value = !modalShow.value
   }
+
+  watch(userInfo, () => {
+    currentUser.value = userInfo.value
+  })
 
   onActivated(() => {
     isSelf = currentUserId === userStore.userId
