@@ -42,12 +42,9 @@
         </div>
       </div>
       <div class="main-info-follow">
-        <n-button
-          :disabled="loading"
-          :type="originFocusState ? 'warning' : 'primary'"
-          @click="focusUserHandle"
-          >{{ originFocusState ? '😡 取消关注' : '🤩 关注' }}</n-button
-        >
+        <n-button :disabled="loading" @click="focusUserHandle">{{
+          originFocusState ? '😡 取消关注' : '🤩 关注'
+        }}</n-button>
         <n-button type="error" @click="reportUserHandle">😥 举报</n-button>
       </div>
     </div>

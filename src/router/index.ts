@@ -11,6 +11,7 @@ import type { RouteRecordRaw } from 'vue-router'
 // import PageDetail from '@/pages/PageDetail'
 // import PageRegister from '@/pages/PageRegister'
 // import PageMoment from '@/pages/PageMoment'
+// import PageChat from '@/pages/PageChat'
 // import PageNotFound from '@/pages/PageNotFound'
 
 const routes: RouteRecordRaw[] = [
@@ -90,6 +91,13 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/PageNotFound'),
     meta: {
       title: '页面走丢了 😥',
+    },
+  },
+  {
+    path: '/chat',
+    component: () => import('@/pages/PageChat'),
+    meta: {
+      title: '一起聊 💬',
     },
   },
 ]
