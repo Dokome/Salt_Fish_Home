@@ -8,14 +8,16 @@
             v-for="message in messages"
             :key="message.id"
             class="main-item"
-            :class="1 ? ' self' : ''"
+            :class="user.userId == message.senderId ? ' self' : ''"
           >
             <n-avatar
               class="main-avatar"
               :size="36"
               round
               object-fit="cover"
-              :src="/*user.imgUrl*/ 123 ? defaultAvatar : defaultAvatar"
+              :src="
+                message.img_url ? `http://112.74.108.218:8080/${message.img_url}` : defaultAvatar
+              "
               fallback-src="/src/assets/image/bgc1.jpg"
             />
             <div class="main-item-content">{{ message.content }}</div>
@@ -27,26 +29,26 @@
             type="textarea"
             :autosize="{ maxRows: 3, minRows: 1 }"
             :maxlength="500"
+            :value="sendValue"
+            @update-value="sendValueChangeValue"
           ></n-input>
-          <n-button>发送 🚀</n-button>
+          <n-button @click="sendMessage">发送 🚀</n-button>
         </div>
       </div>
       <div class="chat-box-user">
         <div class="user-title">
-          <base-title title="当前在线 3" />
+          <base-title :title="`当前在线 ${userlist.size}`" />
         </div>
-        <div v-for="user in 3" :key="user" class="user-item">
+        <div v-for="onlineUser in userlist.values()" :key="onlineUser.id" class="user-item">
           <n-avatar
             round
             object-fit="cover"
             :src="
-              /*user.imgUrl*/ 123
-                ? `http://112.74.108.218:8080/${/*user.imgUrl*/ 123}`
-                : defaultAvatar
+              onlineUser.imgUrl ? `http://112.74.108.218:8080/${onlineUser.imgUrl}` : defaultAvatar
             "
             fallback-src="/src/assets/image/bgc1.jpg"
           />
-          {{ 'dokom' }}
+          {{ onlineUser.nick }}
         </div>
       </div>
     </div>
@@ -58,7 +60,8 @@ import BaseTitle from '@/base/BaseTitle'
 import defaultAvatar from '@/assets/image/default-avatar.png'
 import { NAvatar, NInput, NButton } from 'naive-ui'
 import { useWebSocket } from './hooks'
-const { messages, messageBox } = useWebSocket()
+const { messages, messageBox, user, sendValue, userlist, sendValueChangeValue, sendMessage } =
+  useWebSocket()
 </script>
 
 <style lang="scss" scoped>

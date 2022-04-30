@@ -1,4 +1,7 @@
-import { useWsStore } from '@/store'
+import { useWsStore, useUserStore } from '@/store'
+import { MessageContentType } from '@/store/typs'
+import { UserInfoResponseMsg } from '@/service/userType'
+
 import { watch, computed, ref, onMounted, nextTick } from 'vue'
 import { throttle } from 'lodash'
 
@@ -7,11 +10,14 @@ export function useWebSocket() {
   const needScroll = ref(false)
   const messageBox = ref<HTMLDivElement>()
   const ws = useWsStore()
-  const messages = computed(() => ws.messages)
-  //
+  const user = useUserStore()
+  const messages = computed<MessageContentType[]>(() => ws.messages)
+  const userlist = computed<Map<number, UserInfoResponseMsg>>(() => ws.userlist)
+  // 消息
+  const sendValue = ref('')
 
   onMounted(() => {
-    ws.init()
+    ws.init(user.userId)
     const box = messageBox.value as HTMLDivElement
     box.addEventListener(
       'scroll',
@@ -40,11 +46,40 @@ export function useWebSocket() {
       box.scrollTo(0, current + Math.ceil(total - current) / 100)
       requestAnimationFrame(scrollAniamte)
     }
+
     ;(fristLoaded.value || needScroll.value) && requestAnimationFrame(scrollAniamte)
   })
+
+  // 发送消息
+  function sendValueChangeValue(inputValue: any) {
+    sendValue.value = inputValue
+  }
+
+  function sendMessage() {
+    const data = {
+      action: 3,
+      chat: {
+        senderId: user.userId,
+        receiverId: -1,
+        content: sendValue.value,
+        sign: 0,
+      },
+      uuid: -1,
+      createrId: null,
+    }
+    needScroll.value = true
+    ws.send(data)
+    sendValue.value = ''
+  }
 
   return {
     messageBox,
     messages,
+    user,
+    sendValue,
+    userlist,
+    //
+    sendValueChangeValue,
+    sendMessage,
   }
 }
