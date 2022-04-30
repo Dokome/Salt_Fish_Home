@@ -3,23 +3,22 @@
     <div class="chat-box">
       <div class="chat-box-main">
         <div class="main-title">咸言咸语</div>
-        <ul class="main-list">
-          <li v-for="item in 10" :key="item" class="main-item" :class="item & 1 ? ' self' : ''">
+        <ul ref="messageBox" class="main-list">
+          <li
+            v-for="message in messages"
+            :key="message.id"
+            class="main-item"
+            :class="1 ? ' self' : ''"
+          >
             <n-avatar
               class="main-avatar"
               :size="36"
               round
               object-fit="cover"
-              :src="
-                /*user.imgUrl*/ 123
-                  ? `http://112.74.108.218:8080/${/*user.imgUrl*/ 123}`
-                  : defaultAvatar
-              "
+              :src="/*user.imgUrl*/ 123 ? defaultAvatar : defaultAvatar"
               fallback-src="/src/assets/image/bgc1.jpg"
             />
-            <div class="main-item-content">
-              1231231231231231231231231231231231231231231231231231231231233123123123123123123123123123123123123123123312312312312312312312312312312312312312312331231231231231231231231233
-            </div>
+            <div class="main-item-content">{{ message.content }}</div>
           </li>
         </ul>
         <div class="main-input">
@@ -58,6 +57,8 @@
 import BaseTitle from '@/base/BaseTitle'
 import defaultAvatar from '@/assets/image/default-avatar.png'
 import { NAvatar, NInput, NButton } from 'naive-ui'
+import { useWebSocket } from './hooks'
+const { messages, messageBox } = useWebSocket()
 </script>
 
 <style lang="scss" scoped>

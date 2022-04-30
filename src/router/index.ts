@@ -98,6 +98,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/PageChat'),
     meta: {
       title: '一起聊 💬',
+      needLogin: true,
     },
   },
 ]
