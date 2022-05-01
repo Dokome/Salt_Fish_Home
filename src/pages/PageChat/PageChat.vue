@@ -19,6 +19,7 @@
                 message.img_url ? `http://112.74.108.218:8080/${message.img_url}` : defaultAvatar
               "
               fallback-src="/src/assets/image/bgc1.jpg"
+              @click="enterHome(message.senderId)"
             />
             <div class="main-item-content">{{ message.content }}</div>
           </li>
@@ -47,6 +48,7 @@
               onlineUser.imgUrl ? `http://112.74.108.218:8080/${onlineUser.imgUrl}` : defaultAvatar
             "
             fallback-src="/src/assets/image/bgc1.jpg"
+            @click="enterHome(onlineUser.userId)"
           />
           {{ onlineUser.nick }}
         </div>
@@ -62,6 +64,10 @@ import { NAvatar, NInput, NButton } from 'naive-ui'
 import { useWebSocket } from './hooks'
 const { messages, messageBox, user, sendValue, userlist, sendValueChangeValue, sendMessage } =
   useWebSocket()
+
+function enterHome(userId: number) {
+  location.href = `/center/${userId}`
+}
 </script>
 
 <style lang="scss" scoped>
@@ -125,6 +131,7 @@ const { messages, messageBox, user, sendValue, userlist, sendValueChangeValue, s
 
           .main-avatar {
             flex-shrink: 0;
+            cursor: var(--cursor-pointer);
           }
 
           &.self {
@@ -169,6 +176,7 @@ const { messages, messageBox, user, sendValue, userlist, sendValueChangeValue, s
         font-weight: 700;
         gap: 1rem;
         transition: 0.4s;
+        cursor: var(--cursor-pointer);
 
         &:hover {
           background-color: $background-yellow;

@@ -47,6 +47,7 @@ useRouterGuard(currentNavTab, menulist)
 function changeCurrent(clickIndex: number, target: string) {
   currentNavTab.value = clickIndex
   router.push(target)
+  // location.href = target
 }
 
 function changeSideMode() {

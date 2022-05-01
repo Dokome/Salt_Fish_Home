@@ -2,7 +2,7 @@ import { useWsStore, useUserStore } from '@/store'
 import { MessageContentType } from '@/store/typs'
 import { UserInfoResponseMsg } from '@/service/userType'
 
-import { watch, computed, ref, onMounted, nextTick } from 'vue'
+import { watch, computed, ref, onMounted, nextTick, onActivated } from 'vue'
 import { throttle } from 'lodash'
 
 export function useWebSocket() {
@@ -31,6 +31,11 @@ export function useWebSocket() {
     )
   })
 
+  onActivated(() => {
+    const box = messageBox.value as HTMLDivElement
+    box.scrollTo(0, box.scrollHeight)
+  })
+
   watch(ws.messages, async () => {
     const box = messageBox.value as HTMLDivElement
     await nextTick()
@@ -38,12 +43,13 @@ export function useWebSocket() {
     const total = box.scrollHeight
     const scrollAniamte = () => {
       const current = box.scrollTop
+
       if (Math.ceil(current) >= total - boxHeigt) {
         fristLoaded.value = false
         return
       }
 
-      box.scrollTo(0, current + Math.ceil(total - current) / 100)
+      box.scrollTo(0, current + Math.ceil(total - current) / 50)
       requestAnimationFrame(scrollAniamte)
     }
 

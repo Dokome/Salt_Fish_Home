@@ -24,10 +24,10 @@
         round
         @click="backToHome"
       />
+      <!-- <n-badge v-if="!props.isSelf" dot> -->
+      <span v-if="!props.isSelf" style="color: #000" @click="backToHome">{{ '返回主页' }}</span>
+      <!-- </n-badge> -->
       <span v-if="props.isCenter && props.isSelf" @click="modifyUserInfo">{{ '资料设置 ✏' }}</span>
-      <!-- <n-badge v-if="props.isSelf" dot>
-        <span style="color: #000">{{ '消息 📫' }}</span>
-      </n-badge> -->
     </div>
   </div>
 </template>
